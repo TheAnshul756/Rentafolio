@@ -1,2 +1,2 @@
-# django-project
+# Rentafolio
 ITW2 Project
