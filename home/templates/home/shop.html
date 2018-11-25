@@ -6,7 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <!DOCTYPE html>
 <html lang="zxx">
-
+{% load static %}
 <head>
 	<title>Chronicle Education Category Bootstrap Responsive website Template | Shop Catalogue :: w3layouts</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,17 +25,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- footer stylesheet -->
 	<link href="{% static 'home/css/footer3.css' %}" type="text/css" rel="stylesheet" media="all">
 	<!-- Custom Theme files -->
-	<link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+	<link href="{% static 'home/css/bootstrap.css' %}" type="text/css" rel="stylesheet" media="all">
 	<!-- shop css -->
-	<link href="css/shop.css" type="text/css" rel="stylesheet" media="all">
+	<link href="{% static 'home/css/shop.css' %}" type="text/css" rel="stylesheet" media="all">
 	<!-- checkout css -->
-	<link href="css/checkout.css" type="text/css" rel="stylesheet" media="all">
+	<link href="{% static 'home/css/checkout.css' %}" type="text/css" rel="stylesheet" media="all">
 	<!-- Range-slider-css -->
-	<link rel="stylesheet" type="text/css" href="css/jquery-ui1.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'home/css/jquery-ui1.css' %}">
 	<!-- common-css -->
-	<link href="css/style.css" type="text/css" rel="stylesheet" media="all">
+	<link href="{% static 'home/css/style.css' %}" type="text/css" rel="stylesheet" media="all">
 	<!-- font-awesome icons -->
-	<link href="css/font-awesome.css" rel="stylesheet">
+	<link href="{% static 'home/css/font-awesome.css' %}" rel="stylesheet">
 
 	<!-- //Custom Theme files -->
 	<!-- online-fonts -->
@@ -97,23 +97,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<h3 class="shopf-sear-headits-sear-head">
 							Categories</h3>
 						<ul>
+							{% for genre in genres %}
 							<li>
 								<input type="checkbox" class="checked">
-								<span class="span">Biographies</span>
+								<span class="span">{{genre.name}}</span>
 							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">Fiction</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">Management</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">Business</span>
-							</li>
-
+							{% endfor %}
 						</ul>
 					</div>
 					<!-- // preference -->
@@ -139,25 +128,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<!-- //price range -->
 					<!--preference -->
-					<div class="left-side">
-						<h3 class="shopf-sear-headits-sear-head">
-							<span>latest</span> arrivals</h3>
-						<ul>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">last 30 days</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">last 90 days</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">last 150 days</span>
-							</li>
-
-						</ul>
-					</div>
 					<!-- // preference -->
 					<!-- discounts -->
 					<div class="left-side">
@@ -194,55 +164,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</ul>
 					</div>
 					<!-- //discounts -->
-					<!-- Binding -->
-					<div class="left-side">
-						<h3 class="shopf-sear-headits-sear-head">Format</h3>
-						<ul>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">Hardcover</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">Board Book</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">Bundle</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">Paperback</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">Audio Book</span>
-							</li>
-						</ul>
-					</div>
-					<!-- //Binding -->
-					<!-- discounts -->
-					<div class="left-side">
-						<h3 class="shopf-sear-headits-sear-head">Discount</h3>
-						<ul>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">5% - 20%</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">20% - 40%</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">40% - 60%</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">60% or more</span>
-							</li>
-						</ul>
-					</div>
 					<!-- //discounts -->
 					<!-- reviews -->
 					<div class="customer-rev left-side">
@@ -311,6 +232,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<!-- product-sec1 -->
 						<div class="product-sec1">
 							<!-- row1-->
+							{% for book in books %}
 							<div class="col-md-3 product-men">
 								<div class="product-chr-info chr">
 									<div class="thumbnail">
@@ -319,8 +241,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 										</a>
 									</div>
 									<div class="caption">
-										<h4>be creative</h4>
-										<p>Clayton Barton</p>
+										<h4>{{book.title}}</h4>
+										<p>{{book.author.first_name}} {{book.author.last_name}}</p>
 										<div class="matrlf-mid">
 											<ul class="rating">
 												<li>
@@ -371,672 +293,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3 product-men">
-								<div class="product-chr-info chr">
-									<div class="thumbnail">
-										<a href="single_product.html">
-											<img src="images/lib7.jpg" alt="">
-										</a>
-									</div>
-									<div class="caption">
-										<h4>marketing</h4>
-										<p>Niel Fontine</p>
-										<div class="matrlf-mid">
-											<ul class="rating">
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-											</ul>
-											<ul class="price-list">
-												<li>$ 200.00</li>
-												<li>
-													$250.00
-												</li>
-											</ul>
-
-											<div class="clearfix"> </div>
-										</div>
-										<form action="#" method="post">
-											<input type="hidden" name="cmd" value="_cart">
-											<input type="hidden" name="add" value="1">
-											<input type="hidden" name="chr_item" value="Book2">
-											<input type="hidden" name="amount" value="200.00">
-											<button type="submit" class="chr-cart pchr-cart">Add to cart
-												<i class="fa fa-cart-plus" aria-hidden="true"></i>
-											</button>
-											<a href="#" data-toggle="modal" data-target="#myModal1"></a>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3 product-men">
-								<div class="product-chr-info chr">
-									<div class="thumbnail">
-										<a href="single_product.html">
-											<img src="images/lib3.jpg" alt="">
-										</a>
-									</div>
-									<div class="caption">
-										<h4>work from home</h4>
-										<p>Jose portilla</p>
-										<div class="matrlf-mid">
-											<ul class="rating">
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-											</ul>
-											<ul class="price-list">
-												<li>$ 80.00</li>
-												<li>
-													$100.00
-												</li>
-											</ul>
-
-											<div class="clearfix"> </div>
-										</div>
-										<form action="#" method="post">
-											<input type="hidden" name="cmd" value="_cart">
-											<input type="hidden" name="add" value="1">
-											<input type="hidden" name="chr_item" value="Book3">
-											<input type="hidden" name="amount" value="80.00">
-											<button type="submit" class="chr-cart pchr-cart">Add to cart
-												<i class="fa fa-cart-plus" aria-hidden="true"></i>
-											</button>
-											<a href="#" data-toggle="modal" data-target="#myModal1"></a>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3 product-men">
-								<div class="product-chr-info chr">
-									<div class="thumbnail">
-										<a href="single_product.html">
-											<img src="images/lib6.jpg" alt="">
-										</a>
-									</div>
-									<div class="caption">
-										<h4>online business</h4>
-										<p>Clayton Barton</p>
-										<div class="matrlf-mid">
-											<ul class="rating">
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-											</ul>
-											<ul class="price-list">
-												<li>$ 120.00</li>
-												<li>
-													$130.00
-												</li>
-											</ul>
-
-											<div class="clearfix"> </div>
-										</div>
-										<form action="#" method="post">
-											<input type="hidden" name="cmd" value="_cart">
-											<input type="hidden" name="add" value="1">
-											<input type="hidden" name="chr_item" value="Book4">
-											<input type="hidden" name="amount" value="120.00">
-											<button type="submit" class="chr-cart pchr-cart">Add to cart
-												<i class="fa fa-cart-plus" aria-hidden="true"></i>
-											</button>
-											<a href="#" data-toggle="modal" data-target="#myModal1"></a>
-										</form>
-									</div>
-								</div>
-							</div>
-							<!-- //row1 -->
-							<!-- row2 -->
-							<div class="col-md-3 product-men women_two">
-								<div class="product-chr-info chr">
-									<div class="thumbnail">
-										<a href="single_product.html">
-											<img src="images/lib6.jpg" alt="">
-										</a>
-									</div>
-									<div class="caption">
-										<h4>e-commerce</h4>
-										<p>Chris Haroun</p>
-										<div class="matrlf-mid">
-											<ul class="rating">
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-											</ul>
-											<ul class="price-list">
-												<li>$ 125.00</li>
-												<li>
-													$165.00
-												</li>
-											</ul>
-
-											<div class="clearfix"> </div>
-										</div>
-										<form action="#" method="post">
-											<input type="hidden" name="cmd" value="_cart">
-											<input type="hidden" name="add" value="1">
-											<input type="hidden" name="chr_item" value="Book5">
-											<input type="hidden" name="amount" value="125.00">
-											<button type="submit" class="chr-cart pchr-cart">Add to cart
-												<i class="fa fa-cart-plus" aria-hidden="true"></i>
-											</button>
-											<a href="#" data-toggle="modal" data-target="#myModal1"></a>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3 product-men women_two">
-								<div class="product-chr-info chr">
-									<div class="thumbnail">
-										<a href="single_product.html">
-											<img src="images/lib2.jpg" alt="">
-										</a>
-									</div>
-									<div class="caption">
-										<h4>kids</h4>
-										<p>Alex Even</p>
-										<div class="matrlf-mid">
-											<ul class="rating">
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-											</ul>
-											<ul class="price-list">
-												<li>$ 70.00</li>
-												<li>
-													$100.00
-												</li>
-											</ul>
-
-											<div class="clearfix"> </div>
-										</div>
-										<form action="#" method="post">
-											<input type="hidden" name="cmd" value="_cart">
-											<input type="hidden" name="add" value="1">
-											<input type="hidden" name="chr_item" value="Book6">
-											<input type="hidden" name="amount" value="70.00">
-											<button type="submit" class="chr-cart pchr-cart">Add to cart
-												<i class="fa fa-cart-plus" aria-hidden="true"></i>
-											</button>
-											<a href="#" data-toggle="modal" data-target="#myModal1"></a>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3 product-men women_two">
-								<div class="product-chr-info chr">
-									<div class="thumbnail">
-										<a href="single_product.html">
-											<img src="images/lib5.jpg" alt="">
-										</a>
-									</div>
-									<div class="caption">
-										<h4>media</h4>
-										<p>Alex Even</p>
-										<div class="matrlf-mid">
-											<ul class="rating">
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-											</ul>
-											<ul class="price-list">
-												<li>$ 220.00</li>
-												<li>
-													$300.00
-												</li>
-											</ul>
-
-											<div class="clearfix"> </div>
-										</div>
-										<form action="#" method="post">
-											<input type="hidden" name="cmd" value="_cart">
-											<input type="hidden" name="add" value="1">
-											<input type="hidden" name="chr_item" value="Book7">
-											<input type="hidden" name="amount" value="220.00">
-											<button type="submit" class="chr-cart pchr-cart">Add to cart
-												<i class="fa fa-cart-plus" aria-hidden="true"></i>
-											</button>
-											<a href="#" data-toggle="modal" data-target="#myModal1"></a>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3 product-men women_two">
-								<div class="product-chr-info chr">
-									<div class="thumbnail">
-										<a href="single_product.html">
-											<img src="images/lib4.jpg" alt="">
-										</a>
-									</div>
-									<div class="caption">
-										<h4>membership</h4>
-										<p>Hadilen de</p>
-										<div class="matrlf-mid">
-											<ul class="rating">
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-											</ul>
-											<ul class="price-list">
-												<li>$ 210.00</li>
-												<li>
-													$300.00
-												</li>
-											</ul>
-
-											<div class="clearfix"> </div>
-										</div>
-										<form action="#" method="post">
-											<input type="hidden" name="cmd" value="_cart">
-											<input type="hidden" name="add" value="1">
-											<input type="hidden" name="chr_item" value="Book8">
-											<input type="hidden" name="amount" value="210.00">
-											<button type="submit" class="chr-cart pchr-cart">Add to cart
-												<i class="fa fa-cart-plus" aria-hidden="true"></i>
-											</button>
-											<a href="#" data-toggle="modal" data-target="#myModal1"></a>
-										</form>
-									</div>
-								</div>
-							</div>
-							<!-- //row2 -->
-							<!-- row3 -->
-							<div class="col-md-3 product-men">
-								<div class="product-chr-info chr">
-									<div class="thumbnail">
-										<a href="single_product.html">
-											<img src="images/lib7.jpg" alt="">
-										</a>
-									</div>
-									<div class="caption">
-										<h4>marketing</h4>
-										<p>Scott Harris</p>
-										<div class="matrlf-mid">
-											<ul class="rating">
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-											</ul>
-											<ul class="price-list">
-												<li>$ 180.00</li>
-												<li>
-													$220.00
-												</li>
-											</ul>
-
-											<div class="clearfix"> </div>
-										</div>
-										<form action="#" method="post">
-											<input type="hidden" name="cmd" value="_cart">
-											<input type="hidden" name="add" value="1">
-											<input type="hidden" name="chr_item" value="Book9">
-											<input type="hidden" name="amount" value="180.00">
-											<button type="submit" class="chr-cart pchr-cart">Add to cart
-												<i class="fa fa-cart-plus" aria-hidden="true"></i>
-											</button>
-											<a href="#" data-toggle="modal" data-target="#myModal1"></a>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3 product-men">
-								<div class="product-chr-info chr">
-									<div class="thumbnail">
-										<a href="single_product.html">
-											<img src="images/lib1.jpg" alt="">
-										</a>
-									</div>
-									<div class="caption">
-										<h4>online business</h4>
-										<p>Scott Harris</p>
-										<div class="matrlf-mid">
-											<ul class="rating">
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-											</ul>
-											<ul class="price-list">
-												<li>$ 330.00</li>
-												<li>
-													$560.00
-												</li>
-											</ul>
-
-											<div class="clearfix"> </div>
-										</div>
-										<form action="#" method="post">
-											<input type="hidden" name="cmd" value="_cart">
-											<input type="hidden" name="add" value="1">
-											<input type="hidden" name="chr_item" value="Book10">
-											<input type="hidden" name="amount" value="330.00">
-											<button type="submit" class="chr-cart pchr-cart">Add to cart
-												<i class="fa fa-cart-plus" aria-hidden="true"></i>
-											</button>
-											<a href="#" data-toggle="modal" data-target="#myModal1"></a>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3 product-men">
-								<div class="product-chr-info chr">
-									<div class="thumbnail">
-										<a href="single_product.html">
-											<img src="images/lib2.jpg" alt="">
-										</a>
-									</div>
-									<div class="caption">
-										<h4>kids</h4>
-										<p>Cordebard</p>
-										<div class="matrlf-mid">
-											<ul class="rating">
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-											</ul>
-											<ul class="price-list">
-												<li>$ 280.00</li>
-												<li>
-													$500.00
-												</li>
-											</ul>
-
-											<div class="clearfix"> </div>
-										</div>
-										<form action="#" method="post">
-											<input type="hidden" name="cmd" value="_cart">
-											<input type="hidden" name="add" value="1">
-											<input type="hidden" name="chr_item" value="Book11">
-											<input type="hidden" name="amount" value="280.00">
-											<button type="submit" class="chr-cart pchr-cart">Add to cart
-												<i class="fa fa-cart-plus" aria-hidden="true"></i>
-											</button>
-											<a href="#" data-toggle="modal" data-target="#myModal1"></a>
-										</form>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3 product-men">
-								<div class="product-chr-info chr">
-									<div class="thumbnail">
-										<a href="single_product.html">
-											<img src="images/lib3.jpg" alt="">
-										</a>
-									</div>
-									<div class="caption">
-										<h4>work from home</h4>
-										<p>Cordebard</p>
-										<div class="matrlf-mid">
-											<ul class="rating">
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-											</ul>
-											<ul class="price-list">
-												<li>$ 140.00</li>
-												<li>
-													$200.00
-												</li>
-											</ul>
-
-											<div class="clearfix"> </div>
-										</div>
-										<form action="#" method="post">
-											<input type="hidden" name="cmd" value="_cart">
-											<input type="hidden" name="add" value="1">
-											<input type="hidden" name="chr_item" value="Book12">
-											<input type="hidden" name="amount" value="140.00">
-											<button type="submit" class="chr-cart pchr-cart">Add to cart
-												<i class="fa fa-cart-plus" aria-hidden="true"></i>
-											</button>
-											<a href="#" data-toggle="modal" data-target="#myModal1"></a>
-										</form>
-									</div>
-								</div>
-							</div>
-							<!-- //row3 -->
-							<div class="clearfix"></div>
+							{% endfor %}
+							<div class="clearfix" style="background-color: white;"></div>
 
 						</div>
 
@@ -1195,10 +453,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!-- //home -->
 	<!-- js -->
 	<!-- Common js -->
-	<script src="js/jquery-2.2.3.min.js"></script>
+	<script src="{% static 'home/js/jquery-2.2.3.min.js' %}"></script>
 	<!--// Common js -->
 	<!-- cart-js -->
-	<script src="js/minicart.js"></script>
+	<script src="{% static 'home/js/minicart.js' %}"></script>
 	<script>
 		chr.render();
 
@@ -1250,18 +508,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</script>
 	<!-- //dropdown nav -->
 	<!--search jQuery-->
-	<script src="js/main.js"></script>
+	<script src="{% static 'home/js/main.js' %}"></script>
 	<!--search jQuery-->
 
 	<!-- Scrolling Nav JavaScript -->
-	<script src="js/scrolling-nav.js"></script>
+	<script src="{% static 'home/js/scrolling-nav.js' %}"></script>
 	<!-- //fixed-scroll-nav-js -->
 	<!--//scripts-->
 
-	<script src="js/bootstrap.js"></script>
+	<script src="{% static 'home/js/bootstrap.js' %}"></script>
 	<!-- start-smoth-scrolling -->
-	<script src="js/move-top.js"></script>
-	<script src="js/easing.js"></script>
+	<script src="{% static 'home/js/move-top.js' %}"></script>
+	<script src="{% static 'home/js/easing.js' %}"></script>
 	<script>
 		jQuery(document).ready(function ($) {
 			$(".scroll").click(function (event) {
@@ -1293,7 +551,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</script>
 	<!-- //here ends scrolling icon -->
 	<!-- smoothscroll -->
-	<script src="js/SmoothScroll.min.js"></script>
+	<script src="{% static 'home/js/SmoothScroll.min.js' %}"></script>
 	<!-- //smoothscroll -->
 
 </body>

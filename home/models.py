@@ -48,8 +48,8 @@ class BookInstance(models.Model):
 class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     balance=models.FloatField(default=0.0)
-    address=models.TextField()
-    contact=models.CharField(max_length=10)
+    address=models.TextField(null=True)
+    contact=models.CharField(max_length=10,null=True)
     def __str__(self):
         return self.user.username
 @receiver(post_save, sender=User)
