@@ -14,7 +14,7 @@ api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.i
 
 # Create your views here.
 def test(request) :
-    return render(request, 'home/checkout.html')
+    return render(request, 'home/signup.html')
 def index(request):
     return render(request,'home/index.html')
 
@@ -164,7 +164,7 @@ def signup(request):
             return HttpResponseRedirect(reverse('index'))
     else:
         form = SignUpForm()
-    return render(request, 'home/temp.html', {'form': form})
+    return render(request, 'home/signup.html', {'form': form})
 
 def user_login(request):
     template_name='home/login.html'

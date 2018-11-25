@@ -212,6 +212,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="{% static 'home/js/minicart.js' %}"></script>
     <!-- //cart-js -->
     <!--quantity-->
+<<<<<<< HEAD
     <!--quantity-->
     <!-- FadeOut-Script -->
     <!-- <script type="text/javascript">
@@ -222,6 +223,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             
             mrp=parseFloat("{{ book.mrp }}");
             console.log(mrp);
+=======
+    <script>
+        $('#usebal').on('click',function({
+            balance=parseFloat("{{balance}}"),
+            mrp=parseFloat("{{book.mrp}}"),
+>>>>>>> fa0369d0ba7b69511ac1b32aa746f658d93b8d7c
             if($(this).is(":checked")){
                 if(balance>mrp)fin=0;
                 else fin=mrp-balance;
