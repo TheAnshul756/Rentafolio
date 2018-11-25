@@ -12,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.instamojo.com/api/1.1/')
 
 # Create your views here.
+def test(request) :
+    return render(request, 'home/checkout.html')
 def index(request):
     return render(request,'home/index.html')
 
