@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 from .models import *
 from django.shortcuts import get_object_or_404
@@ -10,7 +10,18 @@ from django.contrib.auth import login, authenticate,logout
 from .forms import SignUpForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+
 api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.instamojo.com/api/1.1/')
+
+def check_email(email):
+    try:
+        validate_email( email )
+        return True
+    except ValidationError:
+        return False
 
 # Create your views here.
 def test(request) :
@@ -29,15 +40,10 @@ def bookDetailView(request,bid):
     }
     return render(request,'home/single_product.html',context=context)
 def catalogView(request):
-    if request.method=="GET":
-        pass
-    else:
-        books=Book.objects.all()
-        p=""
-        for i in books:
-            p+="<p>"+book.title+"</p>"
-        return HttpResponse(p)
-
+    template_name='home/shop.html'
+    books=Book.objects.all()
+    genres=Genre.objects.all()
+    return render(request,template_name,context={'books':books,'genres':genres,})
 @login_required
 @csrf_exempt
 def paymentView(request):
@@ -147,24 +153,73 @@ def issuedView(request):
 
 
 def signup(request):
+    template_name='home/signup.html'
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('index'))
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            user.refresh_from_db()  # load the profile instance created by the signal
-            user.profile.address = form.cleaned_data.get('address')
-            user.profile.contact = form.cleaned_data.get('contact')
-            user.profile.balance=0
+        post = request.POST
+        email = post.get('email')
+        email = email.lower()
+        if not check_email(email):
+            messages.warning(request,"Email is not valid")
+            return render(request,template_name)
+        username = post.get('username')
+        if username == "":
+            messages.warning(request, "Enter a valid email address and username.", fail_silently=True)
+            return render(request,template_name)
+
+        if len(email) > 40 or len(email) <= 0:
+            messages.warning(request, "Email address is too long. Register with a different email address.", fail_silently=True)
+            return render(request,template_name)
+        # print("reched here")
+        password1 = post.get('password1')
+        password2 = post.get('password2')
+        if password1 != password2:
+            messages.warning(request, "Passwords did not match.", fail_silently=True)
+            return render(request,template_name)
+        if len(password1) < 5:
+            messages.warning(request, "Enter a password having atleast 5 characters.", fail_silently=True)
+            return render(request,template_name)
+        # print("reached here")
+        try:
+            already_a_user = User.objects.get(username=username)
+            messages.warning(request,"Username already exists")
+            return render(request,template_name)
+        except:#unique user.
+            already_a_user = False
+        # print("reached here")        
+        try:
+            first_name=post.get('first_name')
+            last_name=post.get('last_name')
+            contact=post.get('contact')
+            if first_name=="" or last_name=="" or contact=="":
+                messages.warning(request,"Fields cannot be empty")
+                return render(request,template_name) 
+            if not(len(contact)==10) and contact.isdigit():
+                messages.warning(request,"Contact number invalid")
+                return render(request,template_name)
+            # print("reached here")
+            
+            user = User.objects.create_user(username=username,email=email)
+            # print("reached here")
+    
+            user.set_password(password1)
+            user.is_active=True
             user.save()
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=user.username, password=raw_password)
-            login(request, user)
-            return HttpResponseRedirect(reverse('index'))
-    else:
-        form = SignUpForm()
-    return render(request, 'home/signup.html', {'form': form})
+            user.refresh_from_db()
+            # print("reached here")
+            
+            user.profile.contact=contact
+            # user.profile.address=address
+            user.first_name=first_name
+            user.last_name=last_name
+            user.save()
+            return redirect(reverse('login'))
+        except:
+            messages.warning(request,"Fields not filled properly")
+            user.delete()
+            return render(request,template_name)
+    return render(request, template_name)
 
 def user_login(request):
     template_name='home/login.html'

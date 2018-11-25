@@ -75,7 +75,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <div class="panel-title">Sign Up</div>
                         </div>
                         <div class="panel-body">
-                            <form id="signupform" class="form-horizontal" action="#" method="post">
+                            <form id="signupform" class="form-horizontal" action="" method="post">
+                                {% csrf_token %}
                                 <div id="signupalert" style="display:none" class="alert alert-danger">
                                     <p>Error:</p>
                                     <span></span>
@@ -83,31 +84,37 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <div class="form-group">
                                     <label class="col-md-3 col-sm-3 col-xs-3 control-label">Email</label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <input type="text" class="form-control" name="email" placeholder="Email Address" required="">
+                                        <input type="email" class="form-control" name="email" placeholder="Email Address" required="">
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                        <label class="col-md-3 col-sm-3 col-xs-3 control-label">Username</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-9">
+                                            <input type="text" class="form-control" name="username" placeholder="Username" required="">
+                                        </div>
+                                    </div>
+                                <div class="form-group">
                                     <label class="col-md-3 col-sm-3 col-xs-3 control-label">First Name</label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <input type="text" class="form-control" name="firstname" placeholder="First Name" required="">
+                                        <input type="text" class="form-control" name="first_name" placeholder="First Name" required="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 col-sm-3 col-xs-3 control-label">Last Name</label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <input type="text" class="form-control" name="lastname" placeholder="Last Name" required="">
+                                        <input type="text" class="form-control" name="last_name" placeholder="Last Name" required="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 col-sm-3 col-xs-3 control-label">Password</label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <input type="password" class="form-control" name="passwd" placeholder="Password" required="">
+                                        <input type="password" class="form-control" name="password1" placeholder="Password" required="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 col-sm-3 col-xs-3 control-label">Confirm Password</label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <input type="password" class="form-control" name="passwd1" placeholder="Password" required="">
+                                        <input type="password" class="form-control" name="password2" placeholder="Password" required="">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -152,6 +159,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                 for (i = 0, len = items.length; i < len; i++) {}
             }
+        });
+        $(document).ready(function () {
+            $("#btn-signup").on('click',function(){
+               $("#signupform").submit();
+           });
         });
     </script>
     <!-- //cart-js -->
