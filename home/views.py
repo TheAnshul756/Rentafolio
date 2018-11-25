@@ -162,7 +162,7 @@ def signup(request):
             return HttpResponseRedirect(reverse('index'))
     else:
         form = SignUpForm()
-    return render(request, 'home/temp.html', {'form': form})
+    return render(request, 'home/signup.html', {'form': form})
 
 def user_login(request):
     template_name='home/login.html'
