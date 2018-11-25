@@ -79,6 +79,30 @@ def issuedView(request):
         return_book.borrower=None
         return_book.status=1
         return_book.save()
+        days_issued=(datetime.now().date()-return_book.b_date.date()).days
+        return_pct=0
+        credit_pct=0
+        if(days_issued<=30):
+            return_pct=0.8
+            credit_pct=0.1
+        elif(days_issued<=60):
+            return_pct=0.7
+            credit_pct=0.15
+        elif(days_issued<=180):
+            credit_pct=0.25
+            return_pct=0.5
+        elif(days_issued<=360):
+            return_pct=0.4
+            credit_pct=0.3
+        else:
+            return_pct=0
+            credit_pct=0.8
+        usr=request.user.profile
+        uploader=return_book.uploader
+        usr.balance+=return_book.book.mrp*return_pct
+        usr.save()
+        uploader.balance+=credit_pct*return_book.book.mrp
+        uploader.save()
         messages.warning(request,"Book successfully returned")
         return HttpResponse("OK")
     issued_books=request.user.profile.borrowed.all()
