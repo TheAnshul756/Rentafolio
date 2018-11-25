@@ -6,6 +6,8 @@ from instamojo_wrapper import Instamojo
 from home import API_KEY,AUTH_TOKEN
 from django.urls import reverse
 from datetime import datetime
+from django.contrib.auth import login, authenticate
+from .forms import SignUpForm
 api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.instamojo.com/api/1.1/')
 
 # Create your views here.
@@ -13,9 +15,11 @@ def index(request):
     return render(request,'home/index.html')
 
 def bookDetailView(request,bid):
-    bk=get_object_or_404(Book,pk=bid)
-    return HttpResponse(bk.title)
-
+    bk=get_object_or_404(Book,id=bid)
+    context={
+        'book':bk,
+    }
+    return render(request,'home/single_product.html',context=context)
 def catalogView(request):
     if request.method=="GET":
         pass
@@ -114,3 +118,20 @@ def issuedView(request):
             p+="<p>"+i.book.title+" issued on "+i.b_date+"</p>"
         return HttpResponse(p)
 
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()  # load the profile instance created by the signal
+            user.profile.address = form.cleaned_data.get('address')
+            user.profile.contact = form.cleaned_data.get('contact')
+            user.save()
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})

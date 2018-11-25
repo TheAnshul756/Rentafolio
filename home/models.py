@@ -11,6 +11,10 @@ class Book(models.Model):
     description=models.TextField(null=True)
     mrp=models.PositiveIntegerField()
     rating=models.FloatField(default=0.0)
+    language=models.CharField(max_length=20,null=True)
+    edition=models.DateField(null=True)
+    pages=models.PositiveIntegerField(null=True)
+    publisher=models.CharField(max_length=50,null=True)
     image=models.ImageField(upload_to='book_image',default='book_image/default.jpg',blank=True,null=True)
     class Meta:
         ordering=('title',)
@@ -59,4 +63,4 @@ def save_user_profile(sender, instance, **kwargs):
 class Rating(models.Model):
     user=models.ForeignKey(Profile,on_delete=models.CASCADE)
     book=models.ForeignKey(Book,on_delete=models.CASCADE,related_name='rating_set')
-    rating=models.PositiveIntegerField(validators=[MaxValueValidator(10), MinValueValidator(1)])
+    rating=models.PositiveIntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
