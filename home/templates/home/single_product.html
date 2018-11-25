@@ -72,7 +72,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<ul class="slides">
 								<li data-thumb="images/s1.jpg">
 									<div class="thumb-image">
-										<img src="{% static 'home/images/lib8.jpg' %}" data-imagezoom="true" alt=" " class="img-responsive"> </div>
+										<img src="/media/{{book.image}}" data-imagezoom="true" alt=" " class="img-responsive"> </div>
 								</li>
 							</ul>
 							<div class="clearfix"></div>
@@ -86,11 +86,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<a href="#">{{book.author}}</a>
 					</p>
 					<div class="caption">
-
 						<ul class="rating-single">
 							<li>
 								<a href="#">
-									{% if book.rating >1 %}
+									{% if rating == "1" or rating == "2" or rating == "3" or rating == "4" or rating == "5"%}
 									<span class="fa fa-star yellow-star" aria-hidden="true"></span>
 									{% else %}
 									<span class="fa fa-star gray-star" aria-hidden="true"></span>
@@ -99,7 +98,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</li>
 							<li>
 								<a href="#">
-										{% if book.rating >1 %}
+										{% if rating == "2" or rating == "3" or rating == "4" or rating == "5" %}
 										<span class="fa fa-star yellow-star" aria-hidden="true"></span>
 										{% else %}
 										<span class="fa fa-star gray-star" aria-hidden="true"></span>
@@ -108,7 +107,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</li>
 							<li>
 								<a href="#">
-										{% if book.rating >1 %}
+										{% if rating == "3" or rating == "4" or rating == "5" %}
 										<span class="fa fa-star yellow-star" aria-hidden="true"></span>
 										{% else %}
 										<span class="fa fa-star gray-star" aria-hidden="true"></span>
@@ -117,7 +116,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</li>
 							<li>
 								<a href="#">
-										{% if book.rating >1 %}
+										{% if rating == "4" or rating == "5" %}
 										<span class="fa fa-star yellow-star" aria-hidden="true"></span>
 										{% else %}
 										<span class="fa fa-star gray-star" aria-hidden="true"></span>
@@ -126,7 +125,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</li>
 							<li>
 								<a href="#">
-										{% if book.rating >1 %}
+										{% if rating == "5" %}
 										<span class="fa fa-star yellow-star" aria-hidden="true"></span>
 										{% else %}
 										<span class="fa fa-star gray-star" aria-hidden="true"></span>
@@ -140,7 +139,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="desc_single">
 						<h5>Description</h5>
-						<p>{{%book.description%}}</p>
+						<p>{{book.description}}</p>
 					</div>
 					<div class="occasional">
 						<h5>Specifications</h5>
@@ -150,7 +149,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<li>
 								<span>publisher :</span> {{book.publisher}}</li>
 							<li>
-								<span>edition :</span>{{book.edition}}</li>
+								<span>edition :</span> {{edition}}</li>
 							<li>
 								<span>pages :</span> {{book.pages}}</li>
 						</ul>
@@ -177,11 +176,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!-- footer -->
 		{% block footer %}{% include 'home/footer3.html' %}{% endblock footer %}
 		<!-- //footer -->
-		<div class="cpy-right">
-			<p>© 2018 Chronicle. All rights reserved | Design by
-				<a href="http://w3layouts.com"> W3layouts.</a>
-			</p>
-		</div>
 	</div>
 	<!-- //home -->
 	<!-- Common js -->

@@ -17,8 +17,12 @@ def index(request):
 
 def bookDetailView(request,bid):
     bk=get_object_or_404(Book,id=bid)
+    rating=str(int(bk.rating))
+    edition=bk.edition.strftime('%B') +" "+str(bk.edition.year)
     context={
         'book':bk,
+        'rating':rating,
+        'edition':edition,
     }
     return render(request,'home/single_product.html',context=context)
 def catalogView(request):
