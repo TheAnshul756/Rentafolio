@@ -65,10 +65,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <!-- signin and signup form -->
         <div class="login-form section text-center">
             <div class="container">
-                <h4 class="rad-txt">
-                    <span class="abtxt1">Sign in</span>
-                    <span class="abtext">sign up</span>
-                </h4>
+                    <h4 class="rad-txt">
+                        <span class="abtxt1">Sign in</span>
+                        <span class="abtext">sign up</span>
+                    </h4>
                 <div id="loginbox" style="margin-top:30px;" class="mainbox  loginbox">
                     <div class="panel panel-info">
                         <div class="panel-heading">
@@ -188,7 +188,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 easingType: 'linear' 
             };
             */
+           $(".abtext").on('click',function(){
+            window.location.href = "{% url 'register' %}";
 
+           });
             $().UItoTop({
                 easingType: 'easeOutQuart'
             });

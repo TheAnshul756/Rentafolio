@@ -200,8 +200,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!--quantity-->
     <script>
         $('#usebal').on('click',function({
-            balance=parseFloat("{{balance}}");
-            mrp=parseFloat("{{book.mrp}}");
+            balance=parseFloat("{{balance}}"),
+            mrp=parseFloat("{{book.mrp}}"),
             if($(this).is(":checked")){
                 if(balance>mrp)fin=0;
                 else fin=mrp-balance;
