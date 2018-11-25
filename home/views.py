@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse,Http404.HttpResponseRedirect
+from django.http import HttpResponse,Http404,HttpResponseRedirect
 from .models import *
 from django.shortcuts import get_object_or_404
 from instamojo_wrapper import Instamojo
 from home import API_KEY,AUTH_TOKEN
+from django.urls import reverse
 from datetime import datetime
 api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.instamojo.com/api/1.1/')
 
@@ -22,7 +23,7 @@ def catalogView(request):
         books=Book.objects.all()
         p=""
         for i in books:
-            p+="<p>"+book.title"</p>"
+            p+="<p>"+book.title+"</p>"
         return HttpResponse(p)
 
 def paymentView(request):
@@ -79,6 +80,7 @@ def issuedView(request):
         return_book.status=1
         return_book.save()
         messages.warning(request,"Book successfully returned")
+        return HttpResponse("OK")
     issued_books=request.user.profile.borrowed.all()
     p=""
     if len(issued_books==0):
