@@ -13,6 +13,7 @@ def index(request):
     return render(request,'home/index.html')
 
 def bookDetailView(request,bid):
+    return render(request,'home/single_product.html')
     bk=get_object_or_404(Book,pk=bid)
     return HttpResponse(bk.title)
 
