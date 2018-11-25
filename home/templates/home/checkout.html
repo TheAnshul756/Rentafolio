@@ -77,101 +77,23 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <table class="timetable_sub table-responsive">
                             <thead>
                                 <tr>
-                                    <th>SL No.</th>
                                     <th>Product</th>
-                                    <th>Quantity</th>
                                     <th>Product Name</th>
-
+                                    <th>Author</th>
                                     <th>Price</th>
-                                    <th>Remove</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="rem1">
-                                    <td class="invert">1</td>
                                     <td class="invert-image">
                                         <a href="single_product.html">
-                                            <img src="images/lib8.jpg" alt=" " class="img-responsive">
+                                            <img src="/media/{{book.image}}" alt=" " class="img-responsive">
                                         </a>
                                     </td>
-                                    <td class="invert">
-                                        <div class="quantity">
-                                            <div class="quantity-select">
-                                                <div class="entry value-minus">&nbsp;</div>
-                                                <div class="entry value">
-                                                    <span>1</span>
-                                                </div>
-                                                <div class="entry value-plus active">&nbsp;</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="invert">Be Creative</td>
-
-                                    <td class="invert">$100.00</td>
-                                    <td class="invert">
-                                        <div class="rem">
-                                            <div class="close1"> </div>
-                                        </div>
-
-                                    </td>
+                                    <td class="invert">{{Book.title}}</td>
+                                    <td class="invert">{{Book.author.first_name}} {{Book.author.last_name}}</td>
+                                    <td class="invert">&#8377; {{book.mrp}}</td>
                                 </tr>
-                                <tr class="rem2">
-                                    <td class="invert">2</td>
-                                    <td class="invert-image">
-                                        <a href="single_product.html">
-                                            <img src="images/lib3.jpg" alt=" " class="img-responsive">
-                                        </a>
-                                    </td>
-                                    <td class="invert">
-                                        <div class="quantity">
-                                            <div class="quantity-select">
-                                                <div class="entry value-minus">&nbsp;</div>
-                                                <div class="entry value">
-                                                    <span>1</span>
-                                                </div>
-                                                <div class="entry value-plus active">&nbsp;</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="invert">Work From Home</td>
-
-                                    <td class="invert">$80.00</td>
-                                    <td class="invert">
-                                        <div class="rem">
-                                            <div class="close2"> </div>
-                                        </div>
-
-                                    </td>
-                                </tr>
-                                <tr class="rem3">
-                                    <td class="invert">3</td>
-                                    <td class="invert-image">
-                                        <a href="single_product.html">
-                                            <img src="images/lib6.jpg" alt=" " class="img-responsive">
-                                        </a>
-                                    </td>
-                                    <td class="invert">
-                                        <div class="quantity">
-                                            <div class="quantity-select">
-                                                <div class="entry value-minus">&nbsp;</div>
-                                                <div class="entry value">
-                                                    <span>1</span>
-                                                </div>
-                                                <div class="entry value-plus active">&nbsp;</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="invert">E-Commerce</td>
-
-                                    <td class="invert">$120.00</td>
-                                    <td class="invert">
-                                        <div class="rem">
-                                            <div class="close3"> </div>
-                                        </div>
-
-                                    </td>
-                                </tr>
-
                             </tbody>
                         </table>
                     </div>
