@@ -72,15 +72,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<ul class="slides">
 								<li data-thumb="images/s1.jpg">
 									<div class="thumb-image">
-										<img src="images/lib8.jpg" data-imagezoom="true" alt=" " class="img-responsive"> </div>
-								</li>
-								<li data-thumb="images/s2.jpg">
-									<div class="thumb-image">
-										<img src="images/s2.jpg" data-imagezoom="true" alt=" " class="img-responsive"> </div>
-								</li>
-								<li data-thumb="images/s3.png">
-									<div class="thumb-image">
-										<img src="images/s3.png" data-imagezoom="true" alt=" " class="img-responsive"> </div>
+										<img src="{% static 'home/images/lib8.jpg' %}" data-imagezoom="true" alt=" " class="img-responsive"> </div>
 								</li>
 							</ul>
 							<div class="clearfix"></div>
@@ -144,26 +136,23 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</ul>
 						<div class="clearfix"> </div>
 						<h6>
-							$100.00</h6>
+							&#8377; {{book.mrp}}</h6>
 					</div>
 					<div class="desc_single">
 						<h5>Description</h5>
-						<p>Pellentesque quis orci sapien. Phasellus at libero in nunc egestas tincidunt. In dictum arcu purus, ultricies tincidunt
-							urna vehicula at. Aenean iaculis urna nec libero scelerisque, ac ullamcorper neque porta.</p>
+						<p>{{%book.description%}}</p>
 					</div>
 					<div class="occasional">
 						<h5>Specifications</h5>
 						<ul class="single_specific">
 							<li>
-								<span>language :</span> english</li>
+								<span>language :</span> {{book.language}}</li>
 							<li>
-								<span>format :</span> Hardcover</li>
+								<span>publisher :</span> {{book.publisher}}</li>
 							<li>
-								<span>publisher :</span> Lorempipsum</li>
+								<span>edition :</span>{{book.edition}}</li>
 							<li>
-								<span>edition :</span> february 2018</li>
-							<li>
-								<span>pages :</span> 765</li>
+								<span>pages :</span> {{book.pages}}</li>
 						</ul>
 
 					</div>
