@@ -43,7 +43,7 @@ class BookInstance(models.Model):
     borrower=models.ForeignKey('Profile',related_name='borrowed',null=True,on_delete=models.SET_NULL)
     uploader=models.ForeignKey('Profile',related_name='uploaded',null=True,on_delete=models.SET_NULL)
     def __str__(self):
-        return self.book_id+" , "+str(self.b_date)
+        return str(self.book.title)+" , "+str(self.b_date)
     
 class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
