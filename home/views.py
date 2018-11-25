@@ -36,17 +36,26 @@ def catalogView(request):
         return HttpResponse(p)
 
 def paymentView(request):
-    bid=request.session.get("book_id",-1)    
-    if(bid==-1):
-        return Http404
+    template_name='home/payment.html'
+    temp=request.session.get("book_id",-1)    
+    if(temp==-1):
+        return Http404   
+    bid=BookInstance.get(id=temp)
+    context={
+        'book':bid,
+        'balance':request.user.profile.balance,
+    }
     if request.method=="POST":
-        topay=Book.objects.get(id=bid).mrp
+        topay=bid.mrp
         balance=request.user.profile.balance
         if 'usebal' in request.POST:
-            if(balance>Book.objects.get(id=bid).mrp):
+            if(balance>bid.mrp):
                 topay=0
             else:
                 topay-=balance
+                usr=request.user.profile
+                usr.balance=0
+                usr.save()
         if(topay>0):
             if(topay<10):
                 topay=10
@@ -58,12 +67,15 @@ def paymentView(request):
                         buyer_name=request.user.username,
                         phone=request.user.profile.phone,
                         redirect_url=request.build_absolute_uri(reverse("checkout")),
-                    )    
+                    )
+                    
             return HttpResponseRedirect(response['payment_request']['longurl'])
         else:
             usr=request.user.profile
-            usr.balance-=Book.objects.get(id=bid).mrp
+            usr.balance-=bid.mrp
             usr.save()
+            request.session["book_purchased"]=True
+            return HttpResponseRedirect(reverse('checkout'))
         book_instances=Book.bookinstance_set.all()
         for i in book_instances:
             if(i.status==1):
@@ -74,11 +86,12 @@ def paymentView(request):
                 break
         request.session["book_issued",bid]
         return HttpResponseRedirect(reverse('checkout'))
-    return HttpResponse("PaymentPage-OK")
+    return render(request,template_name,context=context)
 
         
 
 def profileView(request):
+
     return HttpResponse("profileView-OK")
 
 def issuedView(request):
@@ -145,7 +158,7 @@ def signup(request):
     return render(request, 'home/temp.html', {'form': form})
 
 def user_login(request):
-    template_name='home/temp.html'
+    template_name='home/login.html'
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('index'))
     if request.method == 'POST':
@@ -168,3 +181,30 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+def checkout(request):
+    template_name='home/thanks.html'
+    if 'payment_request_id' in request.GET and 'payment_id' in request.GET:
+        try:
+            payment_request_id=request.GET['payment_request_id']
+            payment_id=request.GET['payment_id']
+            response = api.payment_request_payment_status(payment_request_id, payment_id)
+            pstatus=response['payment_request']['payment']['status']
+            if(pstatus=="Failed"):
+                return HttpResponse("Your Payment failed. Please go to the register page and try again")
+            if(pstatus=="Credit"):
+                reg_obj.payment_status=1
+                reg_obj.save()
+
+            return render(request,template_name,context={
+                'team_id':team_id,
+                'team_name':reg_obj.team_name,
+                'team_leader':reg_obj.team_leader,
+                'payment_status':pstatus,
+                'amount_paid':reg_obj.amount_paid,
+
+            })
+        except:
+            raise Http404
+    raise Http404
+    return render(request,template_name)
