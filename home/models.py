@@ -57,6 +57,6 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 class Rating(models.Model):
-    user=models.OneToOneField(Profile,on_delete=models.CASCADE)
-    book=models.OneToOneField(Book,on_delete=models.CASCADE,related_name='rating_set')
+    user=models.ForeignKey(Profile,on_delete=models.CASCADE)
+    book=models.ForeignKey(Book,on_delete=models.CASCADE,related_name='rating_set')
     rating=models.PositiveIntegerField(validators=[MaxValueValidator(10), MinValueValidator(1)])

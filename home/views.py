@@ -10,7 +10,7 @@ api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.i
 
 # Create your views here.
 def index(request):
-    return HttpResponse("HomePage-OK")
+    return render(request,'home/index.html')
 
 def bookDetailView(request,bid):
     bk=get_object_or_404(Book,pk=bid)
