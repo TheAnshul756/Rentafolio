@@ -8,6 +8,7 @@ from django.urls import reverse
 from datetime import datetime
 from django.contrib.auth import login, authenticate,logout
 from .forms import SignUpForm
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.instamojo.com/api/1.1/')
 
@@ -37,17 +38,19 @@ def catalogView(request):
             p+="<p>"+book.title+"</p>"
         return HttpResponse(p)
 
+@login_required
+@csrf_exempt
 def paymentView(request):
     template_name='home/checkout.html'
-    temp=request.session.get("book_id",-1)
     if 'book_id' not in request.GET:
         raise Http404
     temp=int(request.GET['book_id'])
-    print(temp)
     bid=get_object_or_404(Book,id=temp)
-    num_instances=len(bid.bookinstance_set.filter(status=1))
-    if(num_instances==0):
+    bk_instances=bid.bookinstance_set.filter(status=1)
+    if(len(bk_instances)==0):
         raise Http404
+    else:
+        request.session['instance_id']=bk_instances[0]
     context={
         'book':bid,
         'balance':request.user.profile.balance,
@@ -72,7 +75,7 @@ def paymentView(request):
                         send_email=False,
                         email=request.user.email,
                         buyer_name=request.user.username,
-                        phone=request.user.profile.phone,
+                        phone=request.user.profile.contact,
                         redirect_url=request.build_absolute_uri(reverse("checkout")),
                     )
                     
@@ -91,7 +94,6 @@ def paymentView(request):
                 i.status=0
                 i.save()
                 break
-        request.session["book_issued",bid]
         return HttpResponseRedirect(reverse('checkout'))
     return render(request,template_name,context=context)
 
@@ -136,11 +138,11 @@ def issuedView(request):
         return HttpResponse("OK")
     issued_books=request.user.profile.borrowed.all()
     p=""
-    if len(issued_books==0):
+    if len(issued_books)==0:
         return HttpResponse("You dont have any books issued")
     else:
         for i in issued_books:
-            p+="<p>"+i.book.title+" issued on "+i.b_date+"</p>"
+            p+="<p>"+i.book.title+" issued on "+str(i.b_date.strftime("%-d %B, %Y"))+"</p>"
         return HttpResponse(p)
 
 
@@ -191,6 +193,8 @@ def user_logout(request):
 
 def checkout(request):
     template_name='home/thanks.html'
+    if request.session.get('book_purchased',False):
+        return render(request,template_name)
     if 'payment_request_id' in request.GET and 'payment_id' in request.GET:
         try:
             payment_request_id=request.GET['payment_request_id']
@@ -200,18 +204,15 @@ def checkout(request):
             if(pstatus=="Failed"):
                 return HttpResponse("Your Payment failed. Please go to the register page and try again")
             if(pstatus=="Credit"):
-                reg_obj.payment_status=1
-                reg_obj.save()
-
-            return render(request,template_name,context={
-                'team_id':team_id,
-                'team_name':reg_obj.team_name,
-                'team_leader':reg_obj.team_leader,
-                'payment_status':pstatus,
-                'amount_paid':reg_obj.amount_paid,
-
-            })
+                instance_id=request.session.get('instance_id',-1)
+                bk=get_object_or_404(BookInstance,id=instance_id)
+                bk.status=0
+                bk.borrower=request.user.profile
+                bk.b_date=datetime.now()
+                bk.save()
+                del request.session['instance_id']
+                return render(request,template_name)
         except:
             raise Http404
+        raise Http404
     raise Http404
-    return render(request,template_name)

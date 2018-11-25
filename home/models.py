@@ -50,7 +50,8 @@ class Profile(models.Model):
     balance=models.FloatField(default=0.0)
     address=models.TextField()
     contact=models.CharField(max_length=10)
-
+    def __str__(self):
+        return self.user.username
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
