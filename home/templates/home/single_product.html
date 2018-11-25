@@ -8,7 +8,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html lang="zxx">
 
 <head>
-	<title>Chronicle Education Category Bootstrap Responsive website Template | Single Product :: w3layouts</title>
+	<title>Rentafolio | {{book.title}}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="Chronicle Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -89,38 +89,56 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 				</div>
 				<div class="col-md-8 single-right-left simpleCart_shelfItem">
-					<h3>Be Creative
-						<span>Hardcover – Feb 2018</span>
-					</h3>
+					<h3>{{book.title}}</h3>
 					<p>by
-						<a href="#">Clayton Barton</a>
+						<a href="#">{{book.author}}</a>
 					</p>
 					<div class="caption">
 
 						<ul class="rating-single">
 							<li>
 								<a href="#">
+									{% if book.rating >1 %}
 									<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+									{% else %}
+									<span class="fa fa-star gray-star" aria-hidden="true"></span>
+									{% endif %}
 								</a>
 							</li>
 							<li>
 								<a href="#">
-									<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+										{% if book.rating >1 %}
+										<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+										{% else %}
+										<span class="fa fa-star gray-star" aria-hidden="true"></span>
+										{% endif %}
 								</a>
 							</li>
 							<li>
 								<a href="#">
-									<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+										{% if book.rating >1 %}
+										<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+										{% else %}
+										<span class="fa fa-star gray-star" aria-hidden="true"></span>
+										{% endif %}
 								</a>
 							</li>
 							<li>
 								<a href="#">
-									<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+										{% if book.rating >1 %}
+										<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+										{% else %}
+										<span class="fa fa-star gray-star" aria-hidden="true"></span>
+										{% endif %}
 								</a>
 							</li>
 							<li>
 								<a href="#">
-									<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+										{% if book.rating >1 %}
+										<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+										{% else %}
+										<span class="fa fa-star gray-star" aria-hidden="true"></span>
+										{% endif %}
 								</a>
 							</li>
 						</ul>
@@ -149,34 +167,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</ul>
 
 					</div>
-					<div class="color-quality">
-						<div class="color-quality-right">
-							<h5>Also Formats avaiable in:</h5>
-							<select id="country1" onchange="change_country(this.value)" class="frm-field required sect">
-								<option value="null">paper back &nbsp;$90.00</option>
-								<option value="null">Audio Book &nbsp;$200.00</option>
-							</select>
-						</div>
-					</div>
 					<div class="clearfix"></div>
-					<div class="description">
-						<h5>Check delivery, payment options and charges at your location</h5>
-						<form action="#" method="post">
-							<input type="text" value="Enter pincode" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter pincode';}"
-							    required="">
-							<input type="submit" value="Check">
-						</form>
-					</div>
 					<div class="occasion-cart">
 						<div class="chr single-item single_page_b">
 							<form action="#" method="post">
-								<input type="hidden" name="cmd" value="_cart">
-								<input type="hidden" name="add" value="1">
-								<input type="hidden" name="chr_item" value="Single book">
-								<input type="hidden" name="amount" value="100.00">
 								<button type="submit" class="chr-cart pchr-cart">
-									<i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
-								<a href="#" data-toggle="modal" data-target="#myModal1"></a>
+									<i class="fa fa-cart-plus" aria-hidden="true"></i> Buy Now</button>
 							</form>
 						</div>
 					</div>
