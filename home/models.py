@@ -19,7 +19,7 @@ class Book(models.Model):
     class Meta:
         ordering=('title',)
     def __str__(self):
-        return self.title+" by "+self.author
+        return self.title+" by "+self.author.first_name
 
 class Genre(models.Model):
     name=models.CharField(max_length=25)
