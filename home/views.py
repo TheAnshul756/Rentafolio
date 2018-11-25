@@ -15,11 +15,18 @@ def index(request):
     return render(request,'home/index.html')
 
 def bookDetailView(request,bid):
+<<<<<<< HEAD
     bk=get_object_or_404(Book,id=bid)
     context={
         'book':bk,
     }
     return render(request,'home/single_product.html',context=context)
+=======
+    return render(request,'home/single_product.html')
+    bk=get_object_or_404(Book,pk=bid)
+    return HttpResponse(bk.title)
+
+>>>>>>> 5a41aea3323d449024a88a72240c661d53479f1e
 def catalogView(request):
     if request.method=="GET":
         pass
