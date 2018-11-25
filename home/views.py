@@ -14,7 +14,7 @@ api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.i
 
 # Create your views here.
 def test(request) :
-    return render(request, 'home/signup.html')
+    return render(request, 'home/profile.html')
 def index(request):
     return render(request,'home/index.html')
 
