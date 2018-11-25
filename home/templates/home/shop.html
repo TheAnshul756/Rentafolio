@@ -91,6 +91,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="innerf-pages section">
 			<div class="container-cart">
 				<!-- product left -->
+				<form action="" method="GET" id="filter_form">
 				<div class="side-bar col-md-3">
 					<!--preference -->
 					<div class="left-side">
@@ -99,125 +100,78 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<ul>
 							{% for genre in genres %}
 							<li>
-								<input type="checkbox" class="checked">
+								<input type="checkbox" class="checked" name="genre" value="{{genre.name}}">
 								<span class="span">{{genre.name}}</span>
 							</li>
 							{% endfor %}
 						</ul>
 					</div>
 					<!-- // preference -->
-					<div class="search-hotel">
+					<!-- <div class="search-hotel">
 						<h3 class="shopf-sear-headits-sear-head">
 							<span>author</span> in focus</h3>
 						<form action="#" method="post">
 							<input type="search" placeholder="search here" name="search" required="">
 							<input type="submit" value="Search">
 						</form>
-					</div>
+					</div> -->
 					<!-- price range -->
 					<div class="range">
 						<h3 class="shopf-sear-headits-sear-head">
-							<span>Price</span> range</h3>
-						<ul class="dropdown-menu6">
-							<li>
-
-								<div id="slider-range"></div>
-								<input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />
-							</li>
-						</ul>
+							<span>Max Price</span> range</h3>
+								<input id="slider1" type="range" value="1000" min="50" max="2000" step="10" name="price" ></input>
+								<span id="max_price">1000</span>
 					</div>
 					<!-- //price range -->
 					<!--preference -->
 					<!-- // preference -->
 					<!-- discounts -->
-					<div class="left-side">
-						<h3 class="shopf-sear-headits-sear-head">Language</h3>
-						<ul>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">English</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">Spanish</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">Japanese</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">German</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">Korean</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">Chinese</span>
-							</li>
-							<li>
-								<input type="checkbox" class="checked">
-								<span class="span">French</span>
-							</li>
-						</ul>
-					</div>
-					<!-- //discounts -->
-					<!-- //discounts -->
 					<!-- reviews -->
 					<div class="customer-rev left-side">
 						<h3 class="shopf-sear-headits-sear-head">Customer Review</h3>
+						<input type="hidden" name="rating" value="0">
 						<ul>
-							<li>
-								<a href="#">
+							<li >
+									<i class="fa fa-star" aria-hidden="true" ></i>
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star" aria-hidden="true"></i>
-									<i class="fa fa-star" aria-hidden="true"></i>
-									<span>5.0</span>
-								</a>
+									<span><input type="radio" name="rating" value="5.0"/></span>
 							</li>
 							<li>
-								<a href="#">
+					
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star-o" aria-hidden="true"></i>
-									<span>4.0</span>
-								</a>
+									<span><input type="radio" name="rating" value="4.0"/></span>
+								
 							</li>
 							<li>
-								<a href="#">
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star-half-o" aria-hidden="true"></i>
 									<i class="fa fa-star-o" aria-hidden="true"></i>
-									<span>3.5</span>
-								</a>
+									<span><input type="radio" name="rating" value="3.5"/></span>
 							</li>
 							<li>
-								<a href="#">
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star-o" aria-hidden="true"></i>
 									<i class="fa fa-star-o" aria-hidden="true"></i>
-									<span>3.0</span>
-								</a>
+									<span><input type="radio" name="rating" value="3.0"/></span>
 							</li>
 							<li>
-								<a href="#">
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star" aria-hidden="true"></i>
 									<i class="fa fa-star-half-o" aria-hidden="true"></i>
 									<i class="fa fa-star-o" aria-hidden="true"></i>
 									<i class="fa fa-star-o" aria-hidden="true"></i>
-									<span>2.5</span>
-								</a>
+									<span><input type="radio" name="rating" value="2.5"/></span>
 							</li>
 						</ul>
 					</div>
@@ -237,7 +191,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<div class="product-chr-info chr">
 									<div class="thumbnail">
 										<a href="single_product.html">
-											<img src="images/lib8.jpg" alt="">
+											<img src="/media/{{book.image}}" alt="">
 										</a>
 									</div>
 									<div class="caption">
@@ -280,16 +234,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 											<div class="clearfix"> </div>
 										</div>
-										<form action="#" method="post">
-											<input type="hidden" name="cmd" value="_cart">
-											<input type="hidden" name="add" value="1">
-											<input type="hidden" name="chr_item" value="Book1">
-											<input type="hidden" name="amount" value="100.00">
-											<button type="submit" class="chr-cart pchr-cart">Add to cart
-												<i class="fa fa-cart-plus" aria-hidden="true"></i>
-											</button>
-											<a href="#" data-toggle="modal" data-target="#myModal1"></a>
-										</form>
+										
 									</div>
 								</div>
 							</div>
@@ -305,6 +250,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<div class="clearfix"></div>
 
 			</div>
+			<button id="filter-btn" class="btn btn-default">Apply</button>
+		</form>
 		</div>
 		<!--// Shop -->
  <!-- footer -->
@@ -317,42 +264,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- cart-js -->
 	<script src="{% static 'home/js/minicart.js' %}"></script>
 	<script>
-		chr.render();
+		var slider = document.getElementById("slider1");
+		var sliderout = document.getElementById("max_price");
+		slider.oninput = function() {
+  			sliderout.innerHTML = this.value;
+		}	
 
-		chr.cart.on('new_checkout', function (evt) {
-			var items, len, i;
-
-			if (this.subtotal() > 0) {
-				items = this.items();
-
-				for (i = 0, len = items.length; i < len; i++) {}
-			}
-		});
 	</script>
 	<!-- //cart-js -->
-	<!-- price range (top products) -->
-	<script src="js/jquery-ui.js"></script>
-	<script>
-		//<![CDATA[ 
-		$(window).load(function () {
-			$("#slider-range").slider({
-				range: true,
-				min: 0,
-				max: 9000,
-				values: [50, 6000],
-				slide: function (event, ui) {
-					$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-				}
-			});
-			$("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
-
-		}); //]]>
-	</script>
-	<!-- //price range (top products) -->
 
 	<!-- dropdown nav -->
 	<script>
 		$(document).ready(function () {
+
+			$("#filter-btn").on("click",function(){
+				$("#filter_form").submit();
+			});
+
+			
+
 			$(".dropdown").hover(
 				function () {
 					$('.dropdown-menu', this).stop(true, true).slideDown("fast");

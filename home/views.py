@@ -42,8 +42,32 @@ def bookDetailView(request,bid):
 def catalogView(request):
     template_name='home/shop.html'
     books=Book.objects.all()
+    status_books=[1 for x in books]
+    final_books=[]
+    if 'genre' in request.GET:
+        genre_filter=request.GET.getlist('genre')
+        for idx,i in enumerate(books):
+            if i.genre.name not in genre_filter:
+                status_books[idx]=0
+    
+    if 'price' in request.GET:
+        price=int(request.GET['price'])
+        for idx,i in enumerate(books):
+            if i.mrp > price:
+                status_books[idx]=0
+    
+    if 'rating' in request.GET:
+        rating=float(request.GET['rating'])
+        for idx,i in enumerate(books):
+            if i.rating < rating:
+                status_books[idx]=0
+               
+    for idx,i in enumerate(books):
+        if(status_books[idx]==1):
+            final_books.append(i)
     genres=Genre.objects.all()
-    return render(request,template_name,context={'books':books,'genres':genres,})
+
+    return render(request,template_name,context={'books':final_books,'genres':genres,})
 @login_required
 @csrf_exempt
 def paymentView(request):
@@ -106,8 +130,8 @@ def paymentView(request):
         
 
 def profileView(request):
+    return render(request, 'home/profile.html')
 
-    return HttpResponse("profileView-OK")
 
 def issuedView(request):
     if request.method=="POST":
