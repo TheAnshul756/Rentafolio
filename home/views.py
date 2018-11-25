@@ -15,18 +15,11 @@ def index(request):
     return render(request,'home/index.html')
 
 def bookDetailView(request,bid):
-<<<<<<< HEAD
     bk=get_object_or_404(Book,id=bid)
     context={
         'book':bk,
     }
     return render(request,'home/single_product.html',context=context)
-=======
-    return render(request,'home/single_product.html')
-    bk=get_object_or_404(Book,pk=bid)
-    return HttpResponse(bk.title)
-
->>>>>>> 5a41aea3323d449024a88a72240c661d53479f1e
 def catalogView(request):
     if request.method=="GET":
         pass
@@ -134,6 +127,7 @@ def signup(request):
             user.refresh_from_db()  # load the profile instance created by the signal
             user.profile.address = form.cleaned_data.get('address')
             user.profile.contact = form.cleaned_data.get('contact')
+            user.profile.balance=0
             user.save()
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
