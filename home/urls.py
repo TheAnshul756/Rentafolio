@@ -4,4 +4,7 @@ from . import views
 urlpatterns=[
     path('',views.index,name="index"),
     path('book/<int:bid>/',views.bookDetailView,name="book_detail"),
+    path('login/',views.user_login,name="login"),
+    path('logout/',views.user_logout,name="logout"),
+    path('register/',views.signup,name='register'),
 ]

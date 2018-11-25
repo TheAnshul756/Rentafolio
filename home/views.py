@@ -6,8 +6,9 @@ from instamojo_wrapper import Instamojo
 from home import API_KEY,AUTH_TOKEN
 from django.urls import reverse
 from datetime import datetime
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate,logout
 from .forms import SignUpForm
+from django.contrib.auth.decorators import login_required
 api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.instamojo.com/api/1.1/')
 
 # Create your views here.
@@ -137,4 +138,29 @@ def signup(request):
             return HttpResponseRedirect(reverse('index'))
     else:
         form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'home/temp.html', {'form': form})
+
+def user_login(request):
+    template_name='home/temp.html'
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('index'))
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request,user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return HttpResponse("Your account was inactive.")
+        else:
+            messages.warning(request,"Invalid Login Credentials")
+            return render(request,template_name)
+    else:
+        return render(request, template_name)
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
