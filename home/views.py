@@ -120,6 +120,8 @@ def issuedView(request):
 
 
 def signup(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('index'))
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -132,7 +134,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            return redirect('home')
+            return HttpResponseRedirect(reverse('index'))
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
