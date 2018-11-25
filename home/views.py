@@ -38,11 +38,16 @@ def catalogView(request):
         return HttpResponse(p)
 
 def paymentView(request):
-    template_name='home/payment.html'
-    temp=request.session.get("book_id",-1)    
-    if(temp==-1):
-        return Http404   
-    bid=BookInstance.get(id=temp)
+    template_name='home/checkout.html'
+    temp=request.session.get("book_id",-1)
+    if 'book_id' not in request.GET:
+        raise Http404
+    temp=int(request.GET['book_id'])
+    print(temp)
+    bid=get_object_or_404(Book,id=temp)
+    num_instances=len(bid.bookinstance_set.filter(status=1))
+    if(num_instances==0):
+        raise Http404
     context={
         'book':bid,
         'balance':request.user.profile.balance,
@@ -78,7 +83,7 @@ def paymentView(request):
             usr.save()
             request.session["book_purchased"]=True
             return HttpResponseRedirect(reverse('checkout'))
-        book_instances=Book.bookinstance_set.all()
+        book_instances=bid.bookinstance_set.all()
         for i in book_instances:
             if(i.status==1):
                 i.borrower=request.user.profile

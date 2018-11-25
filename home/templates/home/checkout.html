@@ -103,7 +103,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <ul>
                                 <li>Use Balance From Wallet
                                     <i>-</i>
-                                    <span><input type="checkbox" class="checked"></span>
+                                    <span><input id="usebal" name="usebal" type="checkbox" class="checked" ></span>
                                 </li>
                                 <li>{{book.title}}
                                     <i>-</i>
@@ -111,11 +111,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 </li>
                                 <li>Amount From Wallet
                                     <i>-</i>
-                                    <span> - &#8377; {{500}} </span>
+                                    <span id="walletbal"> - &#8377; {{500}} </span>
                                 </li>
-                                <li>Total Payable
+                                <li>Net Payable
                                     <i>-</i>
-                                    <span>&#8377; 355.00</span>
+                                    <span id="final_amt">&#8377; 355.00</span>
                                 </li>
                             </ul>
                         </div>
@@ -199,6 +199,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!-- //cart-js -->
     <!--quantity-->
     <script>
+        $('#usebal').on('click',function({
+            balance=parseFloat("{{balance}}");
+            mrp=parseFloat("{{book.mrp}}");
+            if($(this).is(":checked")){
+                if(balance>mrp)fin=0;
+                else fin=mrp-balance;
+                $("#final_amt").text("&#8377"+fin);
+            }
+            if($(this).is(":not(:checked)")){
+                $("#final_amt").text("&#8377"+"{{book.mrp}}");
+            }
+        }));
         $('.value-plus').on('click', function () {
             var divUpd = $(this).parent().find('.value'),
                 newVal = parseInt(divUpd.text(), 10) + 1;

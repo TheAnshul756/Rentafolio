@@ -158,8 +158,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="clearfix"></div>
 					<div class="occasion-cart">
 						<div class="chr single-item single_page_b">
-							<form action="#" method="post">
-								<button type="submit" class="chr-cart pchr-cart">
+							<form action="{% url 'payment' %}" method="get">
+								<input type="hidden" name="book_id" value="{{book.id}}"></input>
+								<button type="submit" class="chr-cart pchr-cart" >
 									<i class="fa fa-cart-plus" aria-hidden="true"></i> Buy Now</button>
 							</form>
 						</div>
