@@ -13,4 +13,5 @@ urlpatterns=[
     path('issued/',views.issuedView,name='issued'),
     path('shop/',views.catalogView,name="catalog"),
     path('profile/',views.profileView,name="profile"),
+    # path('issued')
 ]

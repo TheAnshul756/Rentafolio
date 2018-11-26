@@ -88,12 +88,16 @@ def paymentView(request):
     if 'book_id' not in request.GET:
         raise Http404
     temp=int(request.GET['book_id'])
+    # print("YO")
     bid=get_object_or_404(Book,id=temp)
-    bk_instances=bid.bookinstance_set.filter(status=1,active=True)
-    if(len(bk_instances)==0):
+    bk_instances=bid.bookinstance_set.all().filter(status=1,active=True)
+    # print("YESS")
+    try:
+        a=bk_instances[0]
+    except:
         raise Http404
-    else:
-        request.session['instance_id']=bk_instances[0]
+    request.session['instance_id']=a.id
+    # request.session['instance_id']=a
     context={
         'book':bid,
         'balance':request.user.profile.balance,
@@ -101,11 +105,13 @@ def paymentView(request):
     if request.method=="POST":
         topay=bid.mrp
         balance=request.user.profile.balance
-        if 'usebal' in request.POST:
+        if 'balused' in request.POST:
+            print("HI")
             if(balance>bid.mrp):
                 topay=0
-            else:
+            else:            
                 topay-=balance
+                print(topay)
                 usr=request.user.profile
                 usr.balance=0
                 usr.save()
@@ -129,7 +135,8 @@ def paymentView(request):
             usr.save()
             request.session["book_purchased"]=True
             # return HttpResponseRedirect(reverse('checkout'))
-            i=request.session['instance_id']
+            insta_id=request.session['instance_id']
+            i=get_object_or_404(BookInstance,id=insta_id)
             i.borrower=request.user.profile
             i.b_date=datetime.now()
             i.status=0
@@ -205,8 +212,9 @@ def issuedView(request):
         # db.close()
         messages.warning(request,"Book successfully returned")
         return HttpResponse("OK")
-    issued_books=request.user.profile.borrowed.filter(status=0,active=True)
-    return render(request)
+    books=request.user.profile.borrowed.filter(status=0,active=True)
+    # print(len(books))
+    return render(request,template_name='home/issued_books.html',context={'books':books,})
     p=""
     if len(issued_books)==0:
         return HttpResponse("You dont have any books issued")
