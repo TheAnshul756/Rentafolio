@@ -208,8 +208,7 @@ def issuedView(request):
         # days_issued=(datetime.now().date()-return_b1
         # ook.b_date.date())
         abc=return_book.b_date
-        datetime.combine(abc, datetime.min.time())
-        days_issued=datetime.now()-return_book.b_date
+        days_issued=datetime.now().date()-abc
         days_issued=days_issued.days
         return_pct=0
         credit_pct=0
