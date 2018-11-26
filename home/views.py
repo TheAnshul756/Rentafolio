@@ -32,6 +32,16 @@ def test(request):
     return render(request,'home/add-balance.html')
 def bookDetailView(request,bid):
     bk=get_object_or_404(Book,id=bid)
+    db=conn()
+    cursor=db.cursor()
+    query="select * from home_book where id={}".format(bid)
+    cursor.execute(query)
+    results=cursor.fetchall()
+    book={}
+    for row in results:
+        book['id']=row[0]
+        
+        db.close() 
     mrp=bk.mrp
     rating=str(int(bk.rating))
     edition=bk.edition.strftime('%B') +" "+str(bk.edition.year)
