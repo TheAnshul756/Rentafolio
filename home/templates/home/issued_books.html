@@ -74,6 +74,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     </h4>
 
                     <div class="checkout-right">
+                        {% if messages %}
+                        <ul>
+                            {% for i in messages %}
+                            <li>{{i}}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
                         <table class="timetable_sub table-responsive">
                             <thead>
                                 <tr>
@@ -97,7 +104,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     <td class="invert">{{book.book.title}}</td>
                                     <td class="invert">{{book.book.author.first_name}} {{book.book.author.last_name}}</td>
                                     <td class="invert">&#8377; {{book.book.mrp}}</td>
-                                    <td class="invert"><input type="radio"></td>
+                                    <td class="invert"><input type="radio" name="return_id" value="{{book.id}}"></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
