@@ -77,14 +77,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <div class="creditly-wrapper wrapper">
                                     <div class="information-wrapper">
                                         <div class="first-row form-group">
-                                            <div class="controls">
+                                            <form action="" method="POST" id="myform"> <div class="controls">
                                                 <label class="control-label">Input Money to add: </label>
-                                                <input id ="ab1" class="billing-address-name form-control" type="number" name="lol" placeholder="Amount" value="{{0}}">
+                                                <input id ="ab1" class="billing-address-name form-control" type="number" name="money" placeholder="Amount" value="{{0}}">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            <form action="" method="POST" id="myform"><input type="hidden" name="money" id="abc"><button class="submit check_out" id="mybtn">Add Balance</button></form>
+                            {% csrf_token %}<button class="submit check_out" id="mybtn">Add Balance</button></form>
                             </div>
                             <div class="color-quality">
                                 <div class="color-quality-right">

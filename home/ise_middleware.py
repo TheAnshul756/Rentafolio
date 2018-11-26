@@ -36,8 +36,9 @@ from django.utils.deprecation import MiddlewareMixin
 class Custom500Middleware(MiddlewareMixin):
 
     def process_exception(self,request,exception):
-        if isinstance(exception, http.Http404):
-            return render(request,'home/custom500.html')
+        # if isinstance(exception, http.Http404):
+        # return render(request,'home/custom500.html')
+        pass
 
 
 # from .models import launch,popular,description,genres,logo
