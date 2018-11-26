@@ -40,19 +40,29 @@ def bookDetailView(request,bid):
     book={}
     for row in results:
         book['id']=row[0]
-        
+        book['title']=row[1]
+        book['description']=row[2]
+        book['mrp']=row[3]
+        book['rating']=row[4]
+        book['language']=row[5]
+        book['edition']=row[6]
+        book['pages']=row[7]
+        book['publisher']=row[8]
+        book['image']=bk.image
+        book['author']=bk.author
+        book['genre']=bk.genre
         db.close() 
     mrp=bk.mrp
     rating=str(int(bk.rating))
     edition=bk.edition.strftime('%B') +" "+str(bk.edition.year)
     context={
-        'book':bk,
+        'book':book,
         'rating':rating,
         'edition':edition,
-        'rent1':mrp*0.2,
-        'rent2':mrp*0.3,
-        'rent3':mrp*0.5,
-        'rent4':mrp*0.6,
+        'rent1':"{0:.2f}".format(mrp*0.2),
+        'rent2':"{0:.2f}".format(mrp*0.3),
+        'rent3':"{0:.2f}".format(mrp*0.5),
+        'rent4':"{0:.2f}".format(mrp*0.6),
     }
     return render(request,'home/single_product.html',context=context)
 
