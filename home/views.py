@@ -28,7 +28,8 @@ def check_email(email):
 # Create your views here.
 def index(request):
     return render(request,'home/index.html')
-
+def test(request):
+    return render(request,'home/add-balance.html')
 def bookDetailView(request,bid):
     bk=get_object_or_404(Book,id=bid)
     rating=str(int(bk.rating))

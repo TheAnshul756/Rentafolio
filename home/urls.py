@@ -4,10 +4,7 @@ from . import views
 from . import feeds
 urlpatterns=[
     path('',views.index,name="index"),
-<<<<<<< Updated upstream
-    # path('test/',views.test,name="test"),
-=======
->>>>>>> Stashed changes
+    path('test/',views.test,name="test"),
     path('book/<int:bid>/',views.bookDetailView,name="book_detail"),
     path('accounts/login/',views.user_login,name="login"),
     path('accounts/logout/',views.user_logout,name="logout"),

@@ -87,15 +87,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <tbody>
                                 {% for book in books %}
                                 <tr class="rem1">
-                                    <tr>{{forloop.counter}}</tr>
+                                    <td>{{forloop.counter}}</td>
                                     <td class="invert-image" width="30%">
                                         <a href="single_product.html">
-                                            <img src="/media/{{book.image}}" alt=" " class="img-responsive" style="max-width: 100%; height: auto;">
+                                            <img src="/media/{{book.book.image}}" alt=" " class="img-responsive" style="max-width: 100%; height: auto;">
                                         </a>
                                     </td>
-                                    <td class="invert">{{book.title}}</td>
-                                    <td class="invert">{{book.author.first_name}} {{book.author.last_name}}</td>
-                                    <td class="invert">&#8377; {{book.mrp}}</td>
+                                    <td class="invert">{{book.book.title}}</td>
+                                    <td class="invert">{{book.book.author.first_name}} {{book.book.author.last_name}}</td>
+                                    <td class="invert">&#8377; {{book.book.mrp}}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

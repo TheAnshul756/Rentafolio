@@ -74,19 +74,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="checkout-left">
                             <div class="col-md-4 checkout-left-basket">
                                 <h4>Available Balance in Wallet &nbsp;&nbsp;&nbsp;<span>&#8377;{{user.profile.balance}}</span></h4>
-                                <ul>
-                                    <li>
-                                            <button class="submit check_out add-balance" id="balance_button">Add Balance</button>
-                                    </li>
-                                    <li>Currently issued books
-                                        <span>{{issued_books}}</span>
-                                    </li>
-                                    <li>Uploaded Books
-                                        <span>{{uploaded_books}} </span>
-                                    </li>
-                                </ul>
-                                <button class="submit check_out" id="issued_button">Issued Books</button>
-                                <button class="submit check_out" id="uploaded_button">Uploaded Books</button>
+                                <div class="creditly-wrapper wrapper">
+                                    <div class="information-wrapper">
+                                        <div class="first-row form-group">
+                                            <div class="controls">
+                                                <label class="control-label">Input Money to add: </label>
+                                                <input class="billing-address-name form-control" type="number" name="money" placeholder="Amount" value="{{0}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <button class="submit check_out" id="uploaded_button">Add Balance</button>
                             </div>
                             <div class="color-quality">
                                 <div class="color-quality-right">
@@ -209,10 +207,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             */
             $(".clickin").on('click',function(){
                 window.location.href = "{% url 'book_upload' %}";
-
-            });
-            $(".add-balance").on('click',function(){
-                window.location.href = "{% url 'add-balance' %}";
 
             });
             $().UItoTop({
