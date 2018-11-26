@@ -69,24 +69,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<!-- //banner-text -->
 		</div>
 		<!-- //banner -->
-		<!-- breadcrumbs -->
-		<div class="crumbs text-center">
-			<div class="container">
-				<div class="row">
-					<ul class="btn-group btn-breadcrumb bc-list">
-						<li class="btn btn1">
-							<a href="index.html">
-								<i class="glyphicon glyphicon-home"></i>
-							</a>
-						</li>
-						<li class="btn btn2">
-							<a href="shop.html">product catalogue</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<!--//breadcrumbs ends here-->
 		<!-- Shop -->
 		<div class="innerf-pages section">
 			<div class="container-cart">
@@ -175,6 +157,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</li>
 						</ul>
 					</div>
+					<div class="customer-rev left-side">
+							<button id="filter-btn" class="btn btn-default">Apply</button>
+					</div>
 					<!-- //reviews -->
 
 
@@ -186,7 +171,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<!-- product-sec1 -->
 						<div class="product-sec1">
 							<!-- row1-->
-							{% for book in books %}
+							{% for i in books %}
 							<div class="col-md-3 product-men">
 								<div class="product-chr-info chr">
 									<div class="thumbnail">
@@ -195,41 +180,58 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 										</a>
 									</div>
 									<div class="caption">
-										<h4>{{book.title}}</h4>
-										<p>{{book.author.first_name}} {{book.author.last_name}}</p>
+										<h4>{{i.book.title}}</h4>
+										<p>{{i.book.author.first_name}} {{i.book.author.last_name}}</p>
 										<div class="matrlf-mid">
 											<ul class="rating">
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star yellow-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
-												<li>
-													<a href="#">
-														<span class="fa fa-star gray-star" aria-hidden="true"></span>
-													</a>
-												</li>
+													<li>
+														<a href="#">
+															{% if i.rating == "1" or i.rating == "2" or i.rating == "3" or i.rating == "4" or i.rating == "5"%}
+															<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+															{% else %}
+															<span class="fa fa-star gray-star" aria-hidden="true"></span>
+															{% endif %}
+														</a>
+													</li>
+													<li>
+														<a href="#">
+																{% if i.rating == "2" or i.rating == "3" or i.rating == "4" or i.rating == "5" %}
+																<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+																{% else %}
+																<span class="fa fa-star gray-star" aria-hidden="true"></span>
+																{% endif %}
+														</a>
+													</li>
+													<li>
+														<a href="#">
+																{% if i.rating == "3" or i.rating == "4" or i.rating == "5" %}
+																<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+																{% else %}
+																<span class="fa fa-star gray-star" aria-hidden="true"></span>
+																{% endif %}
+														</a>
+													</li>
+													<li>
+														<a href="#">
+																{% if i.rating == "4" or i.rating == "5" %}
+																<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+																{% else %}
+																<span class="fa fa-star gray-star" aria-hidden="true"></span>
+																{% endif %}
+														</a>
+													</li>
+													<li>
+														<a href="#">
+																{% if i.rating == "5" %}
+																<span class="fa fa-star yellow-star" aria-hidden="true"></span>
+																{% else %}
+																<span class="fa fa-star gray-star" aria-hidden="true"></span>
+																{% endif %}
+														</a>
+													</li>
 											</ul>
 											<ul class="price-list">
-												<li>$ 100.00</li>
-												<li>
-													$200.00
-												</li>
+												<li>&#8377; {{i.book.mrp}}</li>
 											</ul>
 
 											<div class="clearfix"> </div>
@@ -250,7 +252,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<div class="clearfix"></div>
 
 			</div>
-			<button id="filter-btn" class="btn btn-default">Apply</button>
 		</form>
 		</div>
 		<!--// Shop -->
