@@ -88,6 +88,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <button class="submit check_out" id="issued_button">Issued Books</button>
                                 <button class="submit check_out" id="uploaded_button">Uploaded Books</button>
                             </div>
+                            <div class="color-quality">
+                                <div class="color-quality-right">
+                                    <button class="submit check_out clickin" id="submit_button"> Upload Book </button>
+                                </div>
+                            </div>
                     <div class="col-md-8 address_form">
                             <h4>Your Details</h4>
                             <form action="" method="post" class="creditly-card-form shopf-sear-headinfo_form" id="profile-form">
@@ -202,7 +207,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 easingType: 'linear' 
             };
             */
+            $(".clickin").on('click',function(){
+                window.location.href = "{% url 'login' %}";
 
+            });
             $().UItoTop({
                 easingType: 'easeOutQuart'
             });
