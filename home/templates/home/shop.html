@@ -8,7 +8,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html lang="zxx">
 {% load static %}
 <head>
-	<title>Chronicle Education Category Bootstrap Responsive website Template | Shop Catalogue :: w3layouts</title>
+	<title>Rentafolio | Shop Catalogue</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="keywords" content="Chronicle Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -175,8 +175,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<div class="col-md-3 product-men">
 								<div class="product-chr-info chr">
 									<div class="thumbnail">
-										<a href="single_product.html">
-											<img src="/media/{{book.image}}" alt="">
+										<a href="{% url 'book_detail' i.book.id %}">
+											<img src="/media/{{i.book.image}}" alt="">
 										</a>
 									</div>
 									<div class="caption">
@@ -232,6 +232,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 											</ul>
 											<ul class="price-list">
 												<li>&#8377; {{i.book.mrp}}</li>
+												<li></li>
 											</ul>
 
 											<div class="clearfix"> </div>

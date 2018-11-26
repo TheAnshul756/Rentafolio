@@ -8,7 +8,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html lang="zxx">
 
 <head>
-    <title>Rentafolio | Profile</title>
+    <title>Rentafolio | Checkout</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="Chronicle Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -63,81 +63,44 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <!-- //banner-text -->
         </div>
         <!-- //banner -->
+        
         <!--checkout-->
         <div class="innerf-pages section">
             <div class="container">
                 <div class="privacy about">
                     <h4 class="rad-txt">
-                        <span class="abtxt1">Profile</span>
-                        <span class="abtext">Details</span>
+                        <span class="abtxt1">Uploaded</span>
+                        <span class="abtext">Books</span>
                     </h4>
-                    <div class="checkout-left">
-                            <div class="col-md-4 checkout-left-basket">
-                                <h4>Available Balance in Wallet &nbsp;&nbsp;&nbsp;<span>&#8377;{{user.profile.balance}}</span></h4>
-                                <ul>
-                                    <li>
-                                            <button class="submit check_out" id="submit_button">Add Balance</button>
-                                    </li>
-                                    <li>Currently issued books
-                                        <span>{{issued_books}}</span>
-                                    </li>
-                                    <li>Uploaded Books
-                                        <span>{{uploaded_books}} </span>
-                                    </li>
-                                </ul>
-                                <button class="submit check_out" id="submit_button">Issued Books</button>
-                                <button class="submit check_out" id="submit_button">Uploaded Books</button>
-                            </div>
-                    <div class="col-md-8 address_form">
-                            <h4>Your Details</h4>
-                            <form action="" method="post" class="creditly-card-form shopf-sear-headinfo_form" id="profile-form">
-                                {% csrf_token %}
-                                <div class="creditly-wrapper wrapper">
-                                    <div class="information-wrapper">
-                                        <div class="first-row form-group">
-                                            <div class="controls">
-                                                <label class="control-label">First name: </label>
-                                                <input class="billing-address-name form-control" type="text" name="first_name" placeholder="First name" value="{{user.first_name}}">
-                                            </div>
-                                            <div class="controls">
-                                                <label class="control-label">Last name: </label>
-                                                <input class="billing-address-name form-control" type="text" name="last_name" placeholder="Last name" value="{{user.last_name}}">
-                                            </div>
-                                            <div class="card_number_grids">
-                                                <div class="card_number_grid_left">
-                                                    <div class="controls">
-                                                        <label class="control-label">Mobile number:</label>
-                                                        <input class="form-control" type="tel" placeholder="Mobile number" name="contact" value="{{user.profile.contact}}">
-                                                    </div>
-                                                </div>
-                                                <div class="card_number_grid_right">
-                                                    <div class="controls">
-                                                        <label class="control-label">Adress: </label>
-                                                        <input class="form-control" type="text" placeholder="Address">
-                                                    </div>
-                                                </div>
-                                                <div class="clear"> </div>
-                                            </div>
-                                        </div>
-                                        {% if messages %}
-                                        <ul>
-                                            {% for i in messages %}
-                                            <li>
-                                                {{i}}
-                                            </li>
-                                            {% endfor %}
-                                        </ul>
-                                        {% endif %}
-                                        <button class="submit check_out" id="submit_button">Update Details</button>
-                                        
-                                    </div>
-                                </div>
-                            </form>
-            
-                        </div>
-                        <div class="clearfix"> </div>
-                    </div>
 
+                    <div class="checkout-right">
+                        <table class="timetable_sub table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>S. No.</th>
+                                    <th>Product</th>
+                                    <th>Product Name</th>
+                                    <th>Author</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for book in books %}
+                                <tr class="rem1">
+                                    <tr>{{forloop.counter}}</tr>
+                                    <td class="invert-image" width="30%">
+                                        <a href="single_product.html">
+                                            <img src="/media/{{book.image}}" alt=" " class="img-responsive" style="max-width: 100%; height: auto;">
+                                        </a>
+                                    </td>
+                                    <td class="invert">{{book.title}}</td>
+                                    <td class="invert">{{book.author.first_name}} {{book.author.last_name}}</td>
+                                    <td class="invert">&#8377; {{book.mrp}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
             </div>
@@ -152,11 +115,57 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script>
     $(document).ready(function() {
     //set initial state.
-    $("#submit_button").on("click",function(){
-        $("#profile-form").submit();
-    })
+    balance=parseFloat("{{ balance }}");
+    mrp=parseFloat("{{ book.mrp }}");
+    console.log(balance);
+    $('#usebal').on('click',function(){
+        console.log(mrp);
+        if($(this).is(":checked")){
+            if(balance>mrp){
+                fin=0;
+                $("#walletbal").html("-&#8377; "+"{{book.mrp}}");
+            }
+            else {
+                $("#walletbal").html("-&#8377; "+"{{balance}}");   
+                fin=mrp-balance;
+            }
+            $("#final_amt").html("&#8377; "+fin);
+        }
+        if($(this).is(":not(:checked)")){
+            $("#walletbal").html("-&#8377; "+"0.0");
+            $("#final_amt").html("&#8377; "+"{{book.mrp}}");
+        }
+    });
 });
     </script>
+    <!--// Common js -->
+    <!-- cart-js -->
+    <script src="{% static 'home/js/minicart.js' %}"></script>
+    <!-- //cart-js -->
+    <!--quantity-->
+    <!--quantity-->
+    <!-- FadeOut-Script -->
+    <!-- <script type="text/javascript">
+        $(document).ready(function () {
+            console.log(balance);
+            $('#usebal').on('click',function(){
+            balance=parseFloat("{{ balance }}");
+            
+            mrp=parseFloat("{{ book.mrp }}");
+            console.log(mrp);
+            if($(this).is(":checked")){
+                if(balance>mrp)fin=0;
+                else fin=mrp-balance;
+                $("#final_amt").html("&#8377"+fin);
+            }
+            if($(this).is(":not(:checked)")){
+                $("#final_amt").text("&#8377"+"{{book.mrp}}"+"yoyo");
+            }
+            });
+
+    </script> -->
+
+    <!--// FadeOut-Script -->
 
 
     <!-- //dropdown nav -->
@@ -175,6 +184,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         jQuery(document).ready(function ($) {
             $(".scroll").click(function (event) {
                 event.preventDefault();
+
                 $('html,body').animate({
                     scrollTop: $(this.hash).offset().top
                 }, 1000);
