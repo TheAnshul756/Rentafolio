@@ -80,6 +80,7 @@ def catalogView(request):
     genres=Genre.objects.all()
 
     return render(request,template_name,context={'books':final_books,'genres':genres,})
+
 @login_required
 @csrf_exempt
 def paymentView(request):
@@ -127,16 +128,14 @@ def paymentView(request):
             usr.balance-=bid.mrp
             usr.save()
             request.session["book_purchased"]=True
+            # return HttpResponseRedirect(reverse('checkout'))
+            i=request.session['instance_id']
+            i.borrower=request.user.profile
+            i.b_date=datetime.now()
+            i.status=0
+            i.save()
+            del request.session['instance_id']
             return HttpResponseRedirect(reverse('checkout'))
-        book_instances=bid.bookinstance_set.all()
-        for i in book_instances:
-            if(i.status==1 and active==True):
-                i.borrower=request.user.profile
-                i.b_date=datetime.now()
-                i.status=0
-                i.save()
-                break
-        return HttpResponseRedirect(reverse('checkout'))
     return render(request,template_name,context=context)
 
         
@@ -162,13 +161,13 @@ def profileView(request):
         prof=request.user.profile
         prof.contact=contact
         prof.save()
-        context['updated']:"Details Successfully updated"
+        context['updated']="Details Successfully updated"
         return render(request,template_name,context=context)
-    usr=request.user    
     return render(request, template_name,context=context)
 
 @login_required
 def issuedView(request):
+    template_name='home/issued_books.html'
     if request.method=="POST":
         return_id=int(request.POST['return_id'])
         return_book=BookInstance.objects.get(id=return_id)
@@ -199,9 +198,15 @@ def issuedView(request):
         usr.save()
         uploader.balance+=credit_pct*return_book.book.mrp
         uploader.save()
+        # db=conn()
+        # query="update bookinstance set borrower_id=NULL,status=1 where instance_id={};".format(return_book.id)
+        # cursor.execute(query)
+        # db.commit()
+        # db.close()
         messages.warning(request,"Book successfully returned")
         return HttpResponse("OK")
     issued_books=request.user.profile.borrowed.filter(status=0,active=True)
+    return render(request)
     p=""
     if len(issued_books)==0:
         return HttpResponse("You dont have any books issued")
@@ -266,12 +271,18 @@ def signup(request):
             user.save()
             user.refresh_from_db()
             # print("reached here")
-            
+
             user.profile.contact=contact
             # user.profile.address=address
             user.first_name=first_name
             user.last_name=last_name
             user.save()
+            # db = conn()
+            # cursor = db.cursor()
+            # query="insert into user values({},0,'{}');".format(user.id,contact)
+            # cursor.execute(query)
+            # db.commit()
+            # db.close()
             return redirect(reverse('login'))
         except:
             messages.warning(request,"Fields not filled properly")
@@ -303,6 +314,7 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
 @login_required
 def checkout(request):
     template_name='home/thanks.html'
@@ -323,6 +335,12 @@ def checkout(request):
                 bk.borrower=request.user.profile
                 bk.b_date=datetime.now()
                 bk.save()
+                # db=conn()
+                # cursor=db.cursor()
+                # query="update bookinstance set status=0,b_date=NOW(),borrower_id={} where instance_id={}".format(request.user.profile.id,instance_id)
+                # cursor.execute(query)
+                # db.commit()
+                # db.close()
                 del request.session['instance_id']
                 return render(request,template_name)
         except:
@@ -346,6 +364,11 @@ def addBookView(request):
         book_id=request.POST["book_id"]
         bk=BookInstance(book=book_id,uploader=request.user.profile)
         bk.save()
+        # db=conn()
+        # query="insert into bookinstance values({},{},NOW(),0,0,NULL,{}".format(bk.id,book_id,request.user.profile.id)
+        # cursor.execute(query)
+        # db.commit()
+        # db.close()
         context={
             'books':books,
             'success':"Book successfully added",
