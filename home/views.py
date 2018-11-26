@@ -188,6 +188,8 @@ def profileView(request):
 def issuedView(request):
     template_name='home/issued_books.html'
     if request.method=="POST":
+        if 'return_id' not in request.POST:
+            return HttpResponse("You have not selected any book")
         return_id=int(request.POST['return_id'])
         return_book=BookInstance.objects.get(id=return_id)
         return_book.borrower=None
