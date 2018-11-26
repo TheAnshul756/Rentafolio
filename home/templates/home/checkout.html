@@ -103,7 +103,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <ul>
                                 <li>Use Balance From Wallet
                                     <i>-</i>
-                                    <span><input id="usebal" name="usebal" type="checkbox" class="checked" ></span>
+                                    <span><input id="usebal" name="usebal" type="checkbox" ></span>
                                 </li>
                                 <li>{{book.title}}
                                     <i>-</i>
@@ -162,6 +162,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         
                                     </div>
                                 </div>
+                                <input type="checkbox"  id="balused" name="balused" style="display:none;">
                             </form>
 
                         </div>
@@ -190,6 +191,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     $('#usebal').on('click',function(){
         console.log(mrp);
         if($(this).is(":checked")){
+            $("#balused").prop('checked', true);
+
             if(balance>mrp){
                 fin=0;
                 $("#walletbal").html("-&#8377; "+"{{book.mrp}}");
@@ -201,6 +204,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             $("#final_amt").html("&#8377; "+fin);
         }
         if($(this).is(":not(:checked)")){
+            $("#balused").prop('checked', false);
             $("#walletbal").html("-&#8377; "+"0.0");
             $("#final_amt").html("&#8377; "+"{{book.mrp}}");
         }
