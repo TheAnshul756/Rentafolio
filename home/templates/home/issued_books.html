@@ -82,6 +82,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     <th>Product Name</th>
                                     <th>Author</th>
                                     <th>Price</th>
+                                    <th>Select</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -96,10 +97,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     <td class="invert">{{book.book.title}}</td>
                                     <td class="invert">{{book.book.author.first_name}} {{book.book.author.last_name}}</td>
                                     <td class="invert">&#8377; {{book.book.mrp}}</td>
+                                    <td class="invert"><input type="radio"></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
+                        <button class="submit check_out" id="submit_button">Return</button>
                     </div>
                 </div>
 
