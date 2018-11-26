@@ -195,7 +195,12 @@ def issuedView(request):
         return_book.borrower=None
         return_book.status=1
         return_book.save()
-        days_issued=(datetime.now().date()-return_book.b_date.date()).days
+        # days_issued=(datetime.now().date()-return_b1
+        # ook.b_date.date())
+        abc=return_book.date
+        datetime.combine(abc, datetime.min.time())
+        days_issued=datetime.now()-return_book.b_date
+        days_issued=days_issued.days
         return_pct=0
         credit_pct=0
         if(days_issued<=30):
