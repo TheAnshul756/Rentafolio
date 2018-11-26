@@ -26,8 +26,6 @@ def check_email(email):
         return False
 
 # Create your views here.
-def test(request) :
-    return render(request, 'home/book_upload.html')
 def index(request):
     return render(request,'home/index.html')
 
@@ -41,6 +39,7 @@ def bookDetailView(request,bid):
         'edition':edition,
     }
     return render(request,'home/single_product.html',context=context)
+    
 def catalogView(request):
     template_name='home/shop.html'
     books=Book.objects.all()

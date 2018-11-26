@@ -16,4 +16,5 @@ urlpatterns=[
     path('profile/',views.profileView,name="profile"),
     path('uploaded/',views.uploadedView,name="uploaded"),
     path('feed/',feeds.HighestRatedFeed(),name="feed"),
+    path('upload/',views.addBookView,name="book_upload"),
 ]
