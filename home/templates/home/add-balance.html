@@ -79,12 +79,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <div class="first-row form-group">
                                             <div class="controls">
                                                 <label class="control-label">Input Money to add: </label>
-                                                <input class="billing-address-name form-control" type="number" name="money" placeholder="Amount" value="{{0}}">
+                                                <input id ="ab1" class="billing-address-name form-control" type="number" name="lol" placeholder="Amount" value="{{0}}">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            <button class="submit check_out" id="uploaded_button">Add Balance</button>
+                            <form action="" method="POST" id="myform"><input type="hidden" name="money" id="abc"><button class="submit check_out" id="mybtn">Add Balance</button></form>
                             </div>
                             <div class="color-quality">
                                 <div class="color-quality-right">
@@ -93,7 +93,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             </div>
                     <div class="col-md-8 address_form">
                             <h4>Your Details</h4>
-                            <form action="" method="post" class="creditly-card-form shopf-sear-headinfo_form" id="profile-form">
+                            <form class="creditly-card-form shopf-sear-headinfo_form" id="profile-form">
                                 {% csrf_token %}
                                 <div class="creditly-wrapper wrapper">
                                     <div class="information-wrapper">
@@ -155,18 +155,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script>
     $(document).ready(function() {
     //set initial state.
-    $("#submit_button").on("click",function(){
-        $("#profile-form").submit();
+    $("#ab1").on("change",function(){
+        $("#abc").value($("#ab1").vaue());
     });
-    $("#issued_button").on("click",function(){
-        window.location.href="{% url 'issued' %}"
+
+    $("#mybtn").on("click",function(){
+        $("#myform").submit();
     });
-    $("#uploaded_button").on("click",function(){
-        window.location.href="{% url 'uploaded' %}"
-    });
-    $("#balance_button").on("click",function(){
-        window.location.href="#"
-    });
+    
 });
     </script>
 
