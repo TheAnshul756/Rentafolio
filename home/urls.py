@@ -1,6 +1,7 @@
 from django.urls import path
 # from .views import *
 from . import views
+from . import feeds
 urlpatterns=[
     path('',views.index,name="index"),
     path('test/',views.test,name="test"),
@@ -13,5 +14,6 @@ urlpatterns=[
     path('issued/',views.issuedView,name='issued'),
     path('shop/',views.catalogView,name="catalog"),
     path('profile/',views.profileView,name="profile"),
-    # path('issued')
+    path('uploaded/',views.uploadedView,name="uploaded"),
+    path('feed/',feeds.HighestRatedFeed(),name="feed"),
 ]

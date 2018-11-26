@@ -76,7 +76,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <h4>Available Balance in Wallet &nbsp;&nbsp;&nbsp;<span>&#8377;{{user.profile.balance}}</span></h4>
                                 <ul>
                                     <li>
-                                            <button class="submit check_out" id="submit_button">Add Balance</button>
+                                            <button class="submit check_out" id="balance_button">Add Balance</button>
                                     </li>
                                     <li>Currently issued books
                                         <span>{{issued_books}}</span>
@@ -85,8 +85,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <span>{{uploaded_books}} </span>
                                     </li>
                                 </ul>
-                                <button class="submit check_out" id="submit_button">Issued Books</button>
-                                <button class="submit check_out" id="submit_button">Uploaded Books</button>
+                                <button class="submit check_out" id="issued_button">Issued Books</button>
+                                <button class="submit check_out" id="uploaded_button">Uploaded Books</button>
                             </div>
                     <div class="col-md-8 address_form">
                             <h4>Your Details</h4>
@@ -112,7 +112,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                                 </div>
                                                 <div class="card_number_grid_right">
                                                     <div class="controls">
-                                                        <label class="control-label">Adress: </label>
+                                                        <label class="control-label">Address: </label>
                                                         <input class="form-control" type="text" placeholder="Address">
                                                     </div>
                                                 </div>
@@ -154,7 +154,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     //set initial state.
     $("#submit_button").on("click",function(){
         $("#profile-form").submit();
-    })
+    });
+    $("#issued_button").on("click",function(){
+        window.location.href="{% url 'issued' %}"
+    });
+    $("#uploaded_button").on("click",function(){
+        window.location.href="{% url 'uploaded' %}"
+    });
+    $("#balance_button").on("click",function(){
+        window.location.href="#"
+    });
 });
     </script>
 

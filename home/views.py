@@ -215,7 +215,6 @@ def issuedView(request):
     books=request.user.profile.borrowed.filter(status=0,active=True)
     # print(len(books))
     return render(request,template_name='home/issued_books.html',context={'books':books,})
-    p=""
     if len(issued_books)==0:
         return HttpResponse("You dont have any books issued")
     else:
@@ -358,7 +357,7 @@ def checkout(request):
 
 @login_required
 def uploadedView(request):
-    template_name='home/uploaded.html'
+    template_name='home/uploaded_books.html'
     uploaded_books=request.user.profile.uploaded.all()
     return render(request,template_name,context={
         'books':uploaded_books,
