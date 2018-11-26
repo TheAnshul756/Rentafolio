@@ -31,12 +31,17 @@ def index(request):
 
 def bookDetailView(request,bid):
     bk=get_object_or_404(Book,id=bid)
+    mrp=bk.mrp
     rating=str(int(bk.rating))
     edition=bk.edition.strftime('%B') +" "+str(bk.edition.year)
     context={
         'book':bk,
         'rating':rating,
         'edition':edition,
+        'rent1':mrp*0.2,
+        'rent2':mrp*0.3,
+        'rent3':mrp*0.5,
+        'rent4':mrp*0.6,
     }
     return render(request,'home/single_product.html',context=context)
 
