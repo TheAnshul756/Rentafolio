@@ -386,3 +386,33 @@ def addBookView(request):
         }
         return render(request,template_name,context=context)
     return render(request,template_name,context={'books':books,})
+
+def addBalance(request):
+    template_name='home/add-balance.html'
+    if request.method=="POST":
+        toadd=int(request.POST['money'])
+        if(toadd<10):
+            toadd=10
+        response = api.payment_request_create(
+                    amount=str(topay),
+                    purpose="Rentafolio Book Rental",
+                    send_email=False,
+                    email=request.user.email,
+                    buyer_name=request.user.username,
+                    phone=request.user.profile.contact,
+                    redirect_url=request.build_absolute_uri(reverse("bal-checkout")),
+                )
+        request.session['balance_to_add']=toadd
+        return HttpResponseRedirect(response['payment_request']['longurl'])
+    return render(request,template_name)
+
+def balanceCheckout(request):
+    template_name='home/thanks.html'
+    if request.session.get('balance_to_add',None):
+        amt=request.session['balance_to_add']
+        usr=request.user.profile        
+        usr.balance+=amt
+        usr.save()
+        del request.session['balance_to_add']   
+        return render(request,template_name)
+    raise Http404

@@ -4,15 +4,11 @@ from . import views
 from . import feeds
 urlpatterns=[
     path('',views.index,name="index"),
-<<<<<<< Updated upstream
     # path('test/',views.test,name="test"),
-=======
->>>>>>> Stashed changes
     path('book/<int:bid>/',views.bookDetailView,name="book_detail"),
     path('accounts/login/',views.user_login,name="login"),
     path('accounts/logout/',views.user_logout,name="logout"),
     path('accounts/register/',views.signup,name='register'),
-    # path('checkout/',views.checkout,name="checkout"),
     path('payment/',views.paymentView,name="payment"),
     path('issued/',views.issuedView,name='issued'),
     path('shop/',views.catalogView,name="catalog"),
@@ -20,4 +16,6 @@ urlpatterns=[
     path('uploaded/',views.uploadedView,name="uploaded"),
     path('feed/',feeds.HighestRatedFeed(),name="feed"),
     path('upload/',views.addBookView,name="book_upload"),
+    path('add-balance',views.addBalance,name="add-balance"),
+    path('bal-checkout',views.balanceCheckout,name="bal-checkout"),
 ]
