@@ -14,8 +14,10 @@ from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 import re
+import MySQLdb
 api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.instamojo.com/api/1.1/')
-
+def conn():
+    return MySQLdb.connect("127.0.0.1","root","12345678","rentafolio2" )
 def check_email(email):
     try:
         validate_email( email )
@@ -71,7 +73,10 @@ def catalogView(request):
 
     for idx,i in enumerate(books):
         if(status_books[idx]==1):
-            final_books.append(i)
+            final_books.append({
+                'book':i,
+                'rating':str(int(i.rating)),
+            })
     genres=Genre.objects.all()
 
     return render(request,template_name,context={'books':final_books,'genres':genres,})
@@ -255,7 +260,7 @@ def signup(request):
             
             user = User.objects.create_user(username=username,email=email)
             # print("reached here")
-    
+
             user.set_password(password1)
             user.is_active=True
             user.save()
