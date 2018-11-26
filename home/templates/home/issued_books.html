@@ -74,6 +74,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     </h4>
 
                     <div class="checkout-right">
+                        {% if messages %}
+                        <ul>
+                            {% for i in messages %}
+                            <li>{{i}}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <form id="myform" method="POST" action="">
+                            {% csrf_token %}
                         <table class="timetable_sub table-responsive">
                             <thead>
                                 <tr>
@@ -97,12 +106,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     <td class="invert">{{book.book.title}}</td>
                                     <td class="invert">{{book.book.author.first_name}} {{book.book.author.last_name}}</td>
                                     <td class="invert">&#8377; {{book.book.mrp}}</td>
-                                    <td class="invert"><input type="radio"></td>
+                                    <td class="invert"><input type="radio" name="return_id" value="{{book.id}}"></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                         <button class="submit check_out" id="submit_button">Return</button>
+                    </form>
                     </div>
                 </div>
 
@@ -118,27 +128,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script>
     $(document).ready(function() {
     //set initial state.
-    balance=parseFloat("{{ balance }}");
-    mrp=parseFloat("{{ book.mrp }}");
-    console.log(balance);
-    $('#usebal').on('click',function(){
-        console.log(mrp);
-        if($(this).is(":checked")){
-            if(balance>mrp){
-                fin=0;
-                $("#walletbal").html("-&#8377; "+"{{book.mrp}}");
-            }
-            else {
-                $("#walletbal").html("-&#8377; "+"{{balance}}");   
-                fin=mrp-balance;
-            }
-            $("#final_amt").html("&#8377; "+fin);
-        }
-        if($(this).is(":not(:checked)")){
-            $("#walletbal").html("-&#8377; "+"0.0");
-            $("#final_amt").html("&#8377; "+"{{book.mrp}}");
-        }
-    });
+    $("#submit-button").on("click",function(){
+        $("#myform").submit();
+    })
 });
     </script>
     <!--// Common js -->

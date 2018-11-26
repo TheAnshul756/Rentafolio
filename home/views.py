@@ -100,7 +100,7 @@ def paymentView(request):
     try:
         a=bk_instances[0]
     except:
-        raise Http404
+        return HttpResponse("All books have been already issued")
     request.session['instance_id']=a.id
     # request.session['instance_id']=a
     context={
@@ -188,6 +188,8 @@ def profileView(request):
 def issuedView(request):
     template_name='home/issued_books.html'
     if request.method=="POST":
+        if 'return_id' not in request.POST:
+            return HttpResponse("You have not selected any book")
         return_id=int(request.POST['return_id'])
         return_book=BookInstance.objects.get(id=return_id)
         return_book.borrower=None
@@ -223,7 +225,8 @@ def issuedView(request):
         # db.commit()
         # db.close()
         messages.warning(request,"Book successfully returned")
-        return HttpResponse("OK")
+        books=request.user.profile.borrowed.filter(status=0,active=True)
+        return render(request,template_name,context={'books':books,})
     books=request.user.profile.borrowed.filter(status=0,active=True)
     # print(len(books))
     return render(request,template_name='home/issued_books.html',context={'books':books,})
@@ -396,7 +399,7 @@ def addBookView(request):
         }
         return render(request,template_name,context=context)
     return render(request,template_name,context={'books':books,})
-
+@login_required
 def addBalance(request):
     template_name='home/add-balance.html'
     if request.method=="POST":
@@ -415,7 +418,7 @@ def addBalance(request):
         request.session['balance_to_add']=toadd
         return HttpResponseRedirect(response['payment_request']['longurl'])
     return render(request,template_name)
-
+@login_required
 def balanceCheckout(request):
     template_name='home/thanks.html'
     if request.session.get('balance_to_add',None):
