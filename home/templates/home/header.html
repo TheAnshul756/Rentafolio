@@ -38,12 +38,14 @@
                                 <a href="{% url 'login' %}">login</a>
                                 {% endif %}
                             </li>
+                            {% if request.user.is_authenticated %}
                             <li>
-                                <a href="{% url 'profile' %}" title="SignIn & SignUp">
+                                <a href="{% url 'profile' %}" title="Profile">
                                     <!-- <span class="fa fa-user nav-icon" aria-hidden="true"></span> -->
                                     <span class="fa fa-user nav-icon" aria-hidden="true"></span>
                                 </a>
                             </li>
+                            {% endif %}
                         </ul>
                         <!-- search-bar -->
                         <div class="search-bar-agileits">
