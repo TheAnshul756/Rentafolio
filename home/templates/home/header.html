@@ -52,8 +52,8 @@
                                 <!-- cd-header-buttons -->
                             </div>
                             <div id="cd-search" class="cd-search">
-                                <form action="#" method="post">
-                                    <input name="Search" type="search" placeholder="Type and Hit Enter...">
+                                <form action="{% url 'catalog' %}" method="get">
+                                    <input name="book_name" type="search" placeholder="Type and Hit Enter...">
                                 </form>
                             </div>
                         </div>

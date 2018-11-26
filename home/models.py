@@ -39,6 +39,7 @@ class Author(models.Model):
 class BookInstance(models.Model):
     book=models.ForeignKey(Book,on_delete=models.CASCADE)
     b_date=models.DateField(null=True)
+    active=models.BooleanField(default=False)
     status=models.BooleanField(default=False)
     borrower=models.ForeignKey('Profile',related_name='borrowed',null=True,on_delete=models.SET_NULL)
     uploader=models.ForeignKey('Profile',related_name='uploaded',null=True,on_delete=models.SET_NULL)

@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-
+import re
 api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.instamojo.com/api/1.1/')
 
 def check_email(email):
@@ -62,6 +62,13 @@ def catalogView(request):
             if i.rating < rating:
                 status_books[idx]=0
                
+    if 'book_name' in request.GET:
+        book_name=request.GET['book_name']
+        reg=r"^.*"+book_name+".*$"
+        for idx,i in enumerate(books):
+            if not re.search(reg,i.title,re.IGNORECASE):
+                status_books[idx]=0
+
     for idx,i in enumerate(books):
         if(status_books[idx]==1):
             final_books.append(i)
@@ -76,7 +83,7 @@ def paymentView(request):
         raise Http404
     temp=int(request.GET['book_id'])
     bid=get_object_or_404(Book,id=temp)
-    bk_instances=bid.bookinstance_set.filter(status=1)
+    bk_instances=bid.bookinstance_set.filter(status=1,active=True)
     if(len(bk_instances)==0):
         raise Http404
     else:
@@ -118,7 +125,7 @@ def paymentView(request):
             return HttpResponseRedirect(reverse('checkout'))
         book_instances=bid.bookinstance_set.all()
         for i in book_instances:
-            if(i.status==1):
+            if(i.status==1 and active==True):
                 i.borrower=request.user.profile
                 i.b_date=datetime.now()
                 i.status=0
@@ -128,11 +135,34 @@ def paymentView(request):
     return render(request,template_name,context=context)
 
         
-
+@login_required
 def profileView(request):
-    return render(request, 'home/profile.html')
+    usr=request.user
+    context={
+        'user':usr,
+        'issued_books':len(usr.profile.borrowed.filter(status=0,active=1)),
+        'uploaded_books':len(usr.profile.uploaded.all())
+    }
+    template_name='home/profile.html'
+    if request.method=="POST":
+        first_name=request.POST['first_name']
+        last_name=request.POST['last_name']
+        contact=request.POST['contact']
+        if not (len(contact)==10 and contact.isdigit()):
+            messages.warning(request,"Contact number invalid",context=context)
+            return render(request,template_name)
+        usr.first_name=first_name
+        usr.last_name=last_name
+        usr.save()
+        prof=request.user.profile
+        prof.contact=contact
+        prof.save()
+        context['updated']:"Details Successfully updated"
+        return render(request,template_name,context=context)
+    usr=request.user    
+    return render(request, template_name,context=context)
 
-
+@login_required
 def issuedView(request):
     if request.method=="POST":
         return_id=int(request.POST['return_id'])
@@ -166,7 +196,7 @@ def issuedView(request):
         uploader.save()
         messages.warning(request,"Book successfully returned")
         return HttpResponse("OK")
-    issued_books=request.user.profile.borrowed.all()
+    issued_books=request.user.profile.borrowed.filter(status=0,active=True)
     p=""
     if len(issued_books)==0:
         return HttpResponse("You dont have any books issued")
@@ -219,10 +249,9 @@ def signup(request):
             if first_name=="" or last_name=="" or contact=="":
                 messages.warning(request,"Fields cannot be empty")
                 return render(request,template_name) 
-            if not(len(contact)==10) and contact.isdigit():
+            if not (len(contact)==10 and contact.isdigit()):
                 messages.warning(request,"Contact number invalid")
                 return render(request,template_name)
-            # print("reached here")
             
             user = User.objects.create_user(username=username,email=email)
             # print("reached here")
@@ -269,7 +298,7 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
-
+@login_required
 def checkout(request):
     template_name='home/thanks.html'
     if request.session.get('book_purchased',False):
@@ -295,3 +324,26 @@ def checkout(request):
             raise Http404
         raise Http404
     raise Http404
+
+@login_required
+def uploadedView(request):
+    template_name='home/uploaded.html'
+    uploaded_books=request.user.profile.uploaded.all()
+    return render(request,template_name,context={
+        'books':uploaded_books,
+    })
+
+@login_required
+def addBookView(request):
+    template_name='home/add_book.html'
+    books=Book.objects.all()
+    if request.method=="POST":
+        book_id=request.POST["book_id"]
+        bk=BookInstance(book=book_id,uploader=request.user.profile)
+        bk.save()
+        context={
+            'books':books,
+            'success':"Book successfully added",
+        }
+        return render(request,template_name,context=context)
+    return render(request,template_name,context={'books':books,})
