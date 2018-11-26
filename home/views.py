@@ -39,7 +39,7 @@ def bookDetailView(request,bid):
         'edition':edition,
     }
     return render(request,'home/single_product.html',context=context)
-    
+
 def catalogView(request):
     template_name='home/shop.html'
     books=Book.objects.all()
@@ -364,7 +364,7 @@ def uploadedView(request):
 
 @login_required
 def addBookView(request):
-    template_name='home/add_book.html'
+    template_name='home/book_upload.html'
     books=Book.objects.all()
     if request.method=="POST":
         book_id=request.POST["book_id"]

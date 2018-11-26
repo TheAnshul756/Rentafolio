@@ -4,11 +4,11 @@ from . import views
 from . import feeds
 urlpatterns=[
     path('',views.index,name="index"),
-    path('test/',views.test,name="test"),
+    # path('test/',views.test,name="test"),
     path('book/<int:bid>/',views.bookDetailView,name="book_detail"),
-    path('login/',views.user_login,name="login"),
-    path('logout/',views.user_logout,name="logout"),
-    path('register/',views.signup,name='register'),
+    path('accounts/login/',views.user_login,name="login"),
+    path('accounts/logout/',views.user_logout,name="logout"),
+    path('accounts/register/',views.signup,name='register'),
     path('checkout/',views.checkout,name="checkout"),
     path('payment/',views.paymentView,name="payment"),
     path('issued/',views.issuedView,name='issued'),
