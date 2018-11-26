@@ -17,7 +17,7 @@ import re
 import MySQLdb
 api = Instamojo(api_key=API_KEY, auth_token=AUTH_TOKEN, endpoint='https://test.instamojo.com/api/1.1/')
 def conn():
-    return MySQLdb.connect("127.0.0.1","root","12345678","rentafolio2" )
+    return MySQLdb.connect("127.0.0.1","root","12345678","rentafolio3" )
 def check_email(email):
     try:
         validate_email( email )
@@ -170,9 +170,16 @@ def profileView(request):
         usr.first_name=first_name
         usr.last_name=last_name
         usr.save()
-        prof=request.user.profile
-        prof.contact=contact
-        prof.save()
+        # prof=request.user.profile
+        # prof.contact=contact
+        # prof.save()
+        db=conn()
+        cursor=db.cursor()
+        query="update home_profile set contact='{}' where id={}".format(contact,usr.id)
+        cursor.execute(query)
+        db.commit()
+        db.close()
+
         context['updated']="Details Successfully updated"
         return render(request,template_name,context=context)
     return render(request, template_name,context=context)
@@ -342,11 +349,13 @@ def checkout(request):
                 return HttpResponse("Your Payment failed. Please go to the register page and try again")
             if(pstatus=="Credit"):
                 instance_id=request.session.get('instance_id',-1)
-                bk=get_object_or_404(BookInstance,id=instance_id)
-                bk.status=0
-                bk.borrower=request.user.profile
-                bk.b_date=datetime.now()
-                bk.save()
+                usrid=request.user.profile.id
+                db=conn()
+                cursor=db.cursor()
+                query="update home_bookinstance set status=0,borrower_id={},b_date=NOW() where id={};".format(usrid,instance_id)
+                cursor.execute(query)
+                db.commit()
+                db.close()
                 # db=conn()
                 # cursor=db.cursor()
                 # query="update bookinstance set status=0,b_date=NOW(),borrower_id={} where instance_id={}".format(request.user.profile.id,instance_id)
@@ -395,7 +404,7 @@ def addBalance(request):
         if(toadd<10):
             toadd=10
         response = api.payment_request_create(
-                    amount=str(topay),
+                    amount=str(toadd),
                     purpose="Rentafolio Book Rental",
                     send_email=False,
                     email=request.user.email,
