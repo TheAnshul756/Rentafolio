@@ -4,11 +4,7 @@ from . import views
 from . import feeds
 urlpatterns=[
     path('',views.index,name="index"),
-<<<<<<< HEAD
     # path('test/',views.test,name="test"),
-=======
-    path('test/',views.test,name="test"),
->>>>>>> c0fd7bee4c3e7bd2e0266ea32a67cad3f88a472d
     path('book/<int:bid>/',views.bookDetailView,name="book_detail"),
     path('accounts/login/',views.user_login,name="login"),
     path('accounts/logout/',views.user_logout,name="logout"),

@@ -31,17 +31,24 @@ from django.shortcuts import render
 #     def process_exception(self, request, exception):
 #         print (exception.__class__.__name__)
 #         print (exception.message)
-#         return None
+# #         return None
 from django.utils.deprecation import MiddlewareMixin
 class Custom500Middleware(MiddlewareMixin):
-    """
-    Middleware that logs user data.
-    """
 
-    def process_request(self, request):
-
-        with open("home/log_data.txt", "a") as f:
-            f.write(request.path + ' '  + '\n')
     def process_exception(self,request,exception):
-        with open("home/log_data.txt", "a") as f:
-            f.write(request.path + ' '  + '\n')
+        if isinstance(exception, http.Http404):
+            return render(request,'home/custom500.html')
+
+
+# from .models import launch,popular,description,genres,logo
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+# class Custom500Middleware():
+# 	def _init_(self,get_response):
+# 		self.get_response=get_response
+# 	def _call_(self,request):
+# 		a=self.get_response(request)
+# 		if (a.status_code!=404):
+# 			return a
+# 		else:
+# 			return render(request,'games/myown404.html',{})
