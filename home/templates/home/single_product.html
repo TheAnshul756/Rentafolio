@@ -152,8 +152,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<span>edition :</span> {{edition}}</li>
 							<li>
 								<span>pages :</span> {{book.pages}}</li>
-						</ul>
-
+							</ul>
+					</div>
+					<div class="color-quality">
+						<div class="color-quality-right">
+							<h5>Rent Prizes:</h5>
+							<select id="country1" onchange="change_country(this.value)" class="frm-field required sect">
+								<option value="null">Upto 30 days &nbsp;&#8377; {{rent1}}</option>
+								<option value="null">Upto 60 days &nbsp;&#8377; {{rent2}}</option>
+								<option value="null">Upto 180 days &nbsp;&#8377; {{rent3}}</option>
+								<option value="null">Upto 360 days &nbsp;&#8377; {{rent4}}</option>
+							</select>
+						</div>
 					</div>
 					<div class="clearfix"></div>
 					<div class="occasion-cart">

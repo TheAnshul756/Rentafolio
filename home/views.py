@@ -27,7 +27,7 @@ def check_email(email):
 
 # Create your views here.
 def test(request) :
-    return render(request, 'home/profile.html')
+    return render(request, 'home/issued_books.html')
 def index(request):
     return render(request,'home/index.html')
 
