@@ -24,7 +24,6 @@ from django.shortcuts import render
 # 		if (a.status_code!=404):
 # 			return a
 # 		else:
-# 			return render(request,'games/myown404.html',{})
 
 
 # class Custom500Middleware(object):

@@ -10,7 +10,7 @@ class HighestRatedFeed(Feed):
       return Book.objects.all().order_by("-rating")[:5]
 		
    def item_title(self, item):
-      return item.title
+      return item.title+" by " +item.author.first_name+" "+item.author.last_name
 		
    def item_description(self, item):
       return item.description
