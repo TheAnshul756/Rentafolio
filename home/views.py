@@ -408,9 +408,19 @@ def uploadedView(request):
 def addBookView(request):
     template_name='home/book_upload.html'
     books=Book.objects.all()
+    context={
+        'books':books,
+    }
+    if 'book' in request.GET:
+        context['currbook']=get_object_or_404(Book,id=int(request.GET['book']))
     if request.method=="POST":
-        book_id=request.POST["book_id"]
-        bk=BookInstance(book=book_id,uploader=request.user.profile)
+        book_id=request.POST["upload_id"]
+        try:
+            abcd=int(book_id)
+        except:
+            raise Http404
+        bk=get_object_or_404(Book,id=int(book_id))
+        bk=BookInstance(book=bk,uploader=request.user.profile)
         bk.save()
         # db=conn()
         # query="insert into bookinstance values({},{},NOW(),0,0,NULL,{}".format(bk.id,book_id,request.user.profile.id)
@@ -422,7 +432,7 @@ def addBookView(request):
             'success':"Book successfully added",
         }
         return render(request,template_name,context=context)
-    return render(request,template_name,context={'books':books,})
+    return render(request,template_name,context=context)
 @login_required
 def addBalance(request):
     template_name='home/add-balance.html'

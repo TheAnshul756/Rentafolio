@@ -33,6 +33,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href="{% static 'home/css/style.css' %}" type="text/css" rel="stylesheet" media="all">
     <!-- font-awesome icons -->
     <link href="{% static 'home/css/font-awesome.css' %}" rel="stylesheet">
+    
     <!-- //Custom Theme files -->
     <!-- online-fonts -->
     <!-- logo -->
@@ -42,6 +43,49 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!-- body -->
     <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
     <!-- //online-fonts -->
+    <style type="text/css">
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
+</style>
 </head>
 
 
@@ -76,14 +120,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     
                     <div class="checkout-left">
                         <div class="col-md-4 checkout-left-basket">
-                                <h4>Book Details</h4>
-                                <form action="" method="post" class="creditly-card-form shopf-sear-headinfo_form">
+                            <div class="dropdown">
+                                <button class="dropbtn">Select Book here</button>
+                                <div class="dropdown-content">
+                                    {% for book in books %}
+                                <a href="{{request.path}}?book={{book.id}}">{{book.title}}</a>
+                                {% endfor %}
+                                </div>
+                              </div>
+                              
+                                <form class="creditly-card-form shopf-sear-headinfo_form">
                                     <div class="creditly-wrapper wrapper">
                                         <div class="information-wrapper">
                                             <div class="first-row form-group">
                                                 <div class="controls">
                                                     <label class="control-label">Book Title: </label>
-                                                    <input class="billing-address-name form-control" type="text" name="title" placeholder="Title">
+                                                    <input class="billing-address-name form-control" type="text" name="title" placeholder="{{currbook.title}}" disabled>
                                                 </div>
                                                 <!-- <div class="controls">
                                                         <label class="control-label">Book Title: </label>
@@ -93,24 +145,24 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                                     <div class="card_number_grid_left">
                                                         <div class="controls">
                                                             <label class="control-label">Book Genere:</label>
-                                                            <input class="billing-address-name form-control" type="text" name="genere" placeholder="Genere">
+                                                            <input class="billing-address-name form-control" type="text" name="genere" placeholder="{{currbook.genre.name}}" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="card_number_grid_right">
                                                         <div class="controls">
                                                             <label class="control-label">Publication: </label>
-                                                            <input class="billing-address-name form-control" type="text" name="publication" placeholder="Publication">
+                                                            <input class="billing-address-name form-control" type="text" name="publication" placeholder="{{currbook.publisher}}" disabled >
                                                         </div>
                                                     </div>
                                                     <div class="clear"> </div>
                                                 </div>
                                                 <div class="controls">
                                                     <label class="control-label">Author: </label>
-                                                    <input class="billing-address-name form-control" type="text" name="author" placeholder="Author">
+                                                    <input class="billing-address-name form-control" type="text" name="author" placeholder="{{currbook.author.first_name}} {{currbook.author.last_name}}" disabled>
                                                 </div>
                                                 <div class="controls">
                                                     <label class="control-label">MRP: </label>
-                                                    <input class="billing-address-name form-control" type="number" name="mrp" placeholder="MRP">
+                                                    <input class="billing-address-name form-control" type="number" name="mrp" placeholder="{{currbook.mrp}}" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -121,7 +173,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </div>
                         <div class="col-md-8 address_form">
                             <h4>Pick-Up Address</h4>
-                            <form action="" method="post" class="creditly-card-form shopf-sear-headinfo_form">
+                            <form action="{% url 'book_upload' %}" method="post" class="creditly-card-form shopf-sear-headinfo_form" id="myform">
+                                {% csrf_token %}
                                 <div class="creditly-wrapper wrapper">
                                     <div class="information-wrapper">
                                         <div class="first-row form-group">
@@ -158,6 +211,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                                 </select>
                                             </div>
                                         </div>
+                                        <input type="hidden" id="upload_id" name="upload_id">
                                         <button class="submit check_out" id="submit_button">Confirm Pick-Up</button>
                                         
                                     </div>
@@ -184,27 +238,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script>
     $(document).ready(function() {
     //set initial state.
-    balance=parseFloat("{{ balance }}");
-    mrp=parseFloat("{{ book.mrp }}");
-    console.log(balance);
-    $('#usebal').on('click',function(){
-        console.log(mrp);
-        if($(this).is(":checked")){
-            if(balance>mrp){
-                fin=0;
-                $("#walletbal").html("-&#8377; "+"{{book.mrp}}");
-            }
-            else {
-                $("#walletbal").html("-&#8377; "+"{{balance}}");   
-                fin=mrp-balance;
-            }
-            $("#final_amt").html("&#8377; "+fin);
-        }
-        if($(this).is(":not(:checked)")){
-            $("#walletbal").html("-&#8377; "+"0.0");
-            $("#final_amt").html("&#8377; "+"{{book.mrp}}");
-        }
-    });
+        {% if success %}
+        alert("{{success}}");
+        {% endif %}
+        {% if request.GET.book %}
+        $("#upload_id").val("{{request.GET.book}}");
+        // $("#myform").submit();
+        {% endif %}
 });
     </script>
     <!--// Common js -->
