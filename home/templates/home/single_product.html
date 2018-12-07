@@ -11,8 +11,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<title>Rentafolio | {{book.title}}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="keywords" content="Chronicle Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-	SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
 	<script>
 		addEventListener("load", function () {
 			setTimeout(hideURLbar, 0);
@@ -192,55 +190,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- Common js -->
 	<script src="{% static 'home/js/jquery-2.2.3.min.js' %}"></script>
 	<!--// Common js -->
-	<!-- cart-js -->
-	<script src="{% static 'home/js/minicart.js' %}"></script>
-	<script>
-		chr.render();
 
-		chr.cart.on('chr_checkout', function (evt) {
-			var items, len, i;
-
-			if (this.subtotal() > 0) {
-				items = this.items();
-
-				for (i = 0, len = items.length; i < len; i++) {}
-			}
-		});
-	</script>
-	<!-- //cart-js -->
 	<!-- zoom -->
 	<script src="{% static 'home/js/imagezoom.js' %}"></script>
 	<!-- zoom-->
-	<!-- single -->
-	<!-- FlexSlider -->
-	<script src="{% static 'home/js/jquery.flexslider.js' %}"></script>
-	<script>
-		// Can also be used with $(document).ready()
-		$(window).load(function () {
-			$('.flexslider1').flexslider({
-				animation: "slide",
-				controlNav: "thumbnails"
-			});
-		});
-	</script>
-	<!-- //FlexSlider-->
-
-	<!-- dropdown nav -->
-	<script>
-		$(document).ready(function () {
-			$(".dropdown").hover(
-				function () {
-					$('.dropdown-menu', this).stop(true, true).slideDown("fast");
-					$(this).toggleClass('open');
-				},
-				function () {
-					$('.dropdown-menu', this).stop(true, true).slideUp("fast");
-					$(this).toggleClass('open');
-				}
-			);
-		});
-	</script>
-	<!-- //dropdown nav -->
 	<!--search jQuery-->
 	<script src="{% static 'home/js/main.js' %}"></script>
 	<!--search jQuery-->
@@ -267,14 +220,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- here stars scrolling icon -->
 	<script>
 		$(document).ready(function () {
-			/*
-				var defaults = {
-				containerID: 'toTop', // fading element id
-				containerHoverID: 'toTopHover', // fading element hover id
-				scrollSpeed: 1200,
-				easingType: 'linear' 
-				};
-			*/
 
 			$().UItoTop({
 				easingType: 'easeOutQuart'

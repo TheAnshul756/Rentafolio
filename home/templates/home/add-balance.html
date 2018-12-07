@@ -8,11 +8,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html lang="zxx">
 
 <head>
-    <title>Rentafolio | Profile</title>
+    <title>Rentafolio | Add Balance</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Chronicle Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-	SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
     <script>
         addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
@@ -68,8 +66,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="container">
                 <div class="privacy about">
                     <h4 class="rad-txt">
-                        <span class="abtxt1">Profile</span>
-                        <span class="abtext">Details</span>
+                        <span class="abtxt1">Add</span>
+                        <span class="abtext">Balance</span>
                     </h4>
                     <div class="checkout-left">
                             <div class="col-md-4 checkout-left-basket">
@@ -78,18 +76,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     <div class="information-wrapper">
                                         <div class="first-row form-group">
                                             <form action="" method="POST" id="myform"> <div class="controls">
+                                                    {% csrf_token %}
                                                 <label class="control-label">Input Money to add: </label>
-                                                <input id ="ab1" class="billing-address-name form-control" type="number" name="money" placeholder="Amount" value="{{0}}">
+                                                <input id ="ab1" class="billing-address-name form-control" type="number" name="money" placeholder="Amount" value="10">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            {% csrf_token %}<button class="submit check_out" id="mybtn">Add Balance</button></form>
-                            </div>
-                            <div class="color-quality">
-                                <div class="color-quality-right">
-                                    <button class="submit check_out clickin" id="submit_button"> Upload Book </button>
-                                </div>
+                            <button class="submit check_out" id="mybtn">Add Balance</button></form>
                             </div>
                     <div class="col-md-8 address_form">
                             <h4>Your Details</h4>
@@ -100,39 +94,28 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <div class="first-row form-group">
                                             <div class="controls">
                                                 <label class="control-label">First name: </label>
-                                                <input class="billing-address-name form-control" type="text" name="first_name" placeholder="First name" value="{{user.first_name}}">
+                                                <input class="billing-address-name form-control" type="text" name="first_name" placeholder="First name" value="{{user.first_name}}" disabled>
                                             </div>
                                             <div class="controls">
                                                 <label class="control-label">Last name: </label>
-                                                <input class="billing-address-name form-control" type="text" name="last_name" placeholder="Last name" value="{{user.last_name}}">
+                                                <input class="billing-address-name form-control" type="text" name="last_name" placeholder="Last name" value="{{user.last_name}}" disabled>
                                             </div>
                                             <div class="card_number_grids">
                                                 <div class="card_number_grid_left">
                                                     <div class="controls">
                                                         <label class="control-label">Mobile number:</label>
-                                                        <input class="form-control" type="tel" placeholder="Mobile number" name="contact" value="{{user.profile.contact}}">
+                                                        <input class="form-control" type="tel" placeholder="Mobile number" name="contact" value="{{user.profile.contact}}" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="card_number_grid_right">
                                                     <div class="controls">
                                                         <label class="control-label">Address: </label>
-                                                        <input class="form-control" type="text" placeholder="Address">
+                                                        <input class="form-control" type="text" placeholder="Address" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="clear"> </div>
                                             </div>
                                         </div>
-                                        {% if messages %}
-                                        <ul>
-                                            {% for i in messages %}
-                                            <li>
-                                                {{i}}
-                                            </li>
-                                            {% endfor %}
-                                        </ul>
-                                        {% endif %}
-                                        <button class="submit check_out" id="submit_button">Update Details</button>
-                                        
                                     </div>
                                 </div>
                             </form>
@@ -193,18 +176,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!-- smooth-scrolling-of-move-up -->
     <script>
         $(document).ready(function () {
-            /*
-            var defaults = {
-                containerID: 'toTop', // fading element id
-                containerHoverID: 'toTopHover', // fading element hover id
-                scrollSpeed: 1200,
-                easingType: 'linear' 
-            };
-            */
-            $(".clickin").on('click',function(){
-                window.location.href = "{% url 'book_upload' %}";
-
-            });
             $().UItoTop({
                 easingType: 'easeOutQuart'
             });

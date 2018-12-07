@@ -5,14 +5,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 {% load static%}
 <!DOCTYPE html>
-<html lang="zxx">
+<html>
 
 <head>
     <title>Rentafolio | Uploaded Books</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Chronicle Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-	SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
     <script>
         addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
@@ -112,63 +110,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     {% block footer %}{% include 'home/footer3.html' %}{% endblock footer %}
     <!-- Common js -->
     <script src="{% static 'home/js/jquery-2.2.3.min.js' %}"></script>
-    <script>
-    $(document).ready(function() {
-    //set initial state.
-    balance=parseFloat("{{ balance }}");
-    mrp=parseFloat("{{ book.mrp }}");
-    console.log(balance);
-    $('#usebal').on('click',function(){
-        console.log(mrp);
-        if($(this).is(":checked")){
-            if(balance>mrp){
-                fin=0;
-                $("#walletbal").html("-&#8377; "+"{{book.mrp}}");
-            }
-            else {
-                $("#walletbal").html("-&#8377; "+"{{balance}}");   
-                fin=mrp-balance;
-            }
-            $("#final_amt").html("&#8377; "+fin);
-        }
-        if($(this).is(":not(:checked)")){
-            $("#walletbal").html("-&#8377; "+"0.0");
-            $("#final_amt").html("&#8377; "+"{{book.mrp}}");
-        }
-    });
-});
-    </script>
     <!--// Common js -->
-    <!-- cart-js -->
-    <script src="{% static 'home/js/minicart.js' %}"></script>
-    <!-- //cart-js -->
-    <!--quantity-->
-    <!--quantity-->
-    <!-- FadeOut-Script -->
-    <!-- <script type="text/javascript">
-        $(document).ready(function () {
-            console.log(balance);
-            $('#usebal').on('click',function(){
-            balance=parseFloat("{{ balance }}");
-            
-            mrp=parseFloat("{{ book.mrp }}");
-            console.log(mrp);
-            if($(this).is(":checked")){
-                if(balance>mrp)fin=0;
-                else fin=mrp-balance;
-                $("#final_amt").html("&#8377"+fin);
-            }
-            if($(this).is(":not(:checked)")){
-                $("#final_amt").text("&#8377"+"{{book.mrp}}"+"yoyo");
-            }
-            });
 
-    </script> -->
-
-    <!--// FadeOut-Script -->
-
-
-    <!-- //dropdown nav -->
     <!--search jQuery-->
     <script src="{% static 'home/js/main.js' %}"></script>
     <!--search jQuery-->
@@ -195,15 +138,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!-- smooth-scrolling-of-move-up -->
     <script>
         $(document).ready(function () {
-            /*
-            var defaults = {
-                containerID: 'toTop', // fading element id
-                containerHoverID: 'toTopHover', // fading element hover id
-                scrollSpeed: 1200,
-                easingType: 'linear' 
-            };
-            */
-
+         
             $().UItoTop({
                 easingType: 'easeOutQuart'
             });

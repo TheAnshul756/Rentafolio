@@ -11,8 +11,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<title>Rentafolio | Shop Catalogue</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="keywords" content="Chronicle Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-	SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
 	<script>
 		addEventListener("load", function () {
 			setTimeout(hideURLbar, 0);
@@ -263,40 +261,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- Common js -->
 	<script src="{% static 'home/js/jquery-2.2.3.min.js' %}"></script>
 	<!--// Common js -->
-	<!-- cart-js -->
-	<script src="{% static 'home/js/minicart.js' %}"></script>
-	<script>
-		var slider = document.getElementById("slider1");
-		var sliderout = document.getElementById("max_price");
-		slider.oninput = function() {
-  			sliderout.innerHTML = this.value;
-		}	
 
-	</script>
-	<!-- //cart-js -->
-
-	<!-- dropdown nav -->
-	<script>
-		$(document).ready(function () {
-
-			$("#filter-btn").on("click",function(){
-				$("#filter_form").submit();
-			});
-
-			
-
-			$(".dropdown").hover(
-				function () {
-					$('.dropdown-menu', this).stop(true, true).slideDown("fast");
-					$(this).toggleClass('open');
-				},
-				function () {
-					$('.dropdown-menu', this).stop(true, true).slideUp("fast");
-					$(this).toggleClass('open');
-				}
-			);
-		});
-	</script>
 	<!-- //dropdown nav -->
 	<!--search jQuery-->
 	<script src="{% static 'home/js/main.js' %}"></script>
@@ -325,14 +290,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!-- here stars scrolling icon -->
 	<script>
 		$(document).ready(function () {
-			/*
-				var defaults = {
-				containerID: 'toTop', // fading element id
-				containerHoverID: 'toTopHover', // fading element hover id
-				scrollSpeed: 1200,
-				easingType: 'linear' 
-				};
-			*/
 
 			$().UItoTop({
 				easingType: 'easeOutQuart'

@@ -456,10 +456,22 @@ def addBalance(request):
 def balanceCheckout(request):
     template_name='home/thanks.html'
     if request.session.get('balance_to_add',None):
-        amt=request.session['balance_to_add']
-        usr=request.user.profile        
-        usr.balance+=amt
-        usr.save()
-        del request.session['balance_to_add']   
-        return render(request,template_name)
+        if 'payment_id' not in request.GET or 'payment_request_id' not in request.GET:
+            raise Http404
+        payment_request_id=request.GET['payment_request_id']
+        payment_id=request.GET['payment_id']
+        response = api.payment_request_payment_status(payment_request_id, payment_id)
+        pstatus=response['payment_request']['payment']['status']
+
+        if(pstatus=="Failed"):
+            del request.session['balance_to_add']   
+            return HttpResponse("Your Payment failed. Please go to the add balance page and try again")
+
+        if(pstatus=="Credit"):
+            amt=request.session['balance_to_add']
+            del request.session['balance_to_add']   
+            usr=request.user.profile        
+            usr.balance+=amt
+            usr.save()
+            return render(request,template_name,context={'balance':'true',})
     raise Http404
