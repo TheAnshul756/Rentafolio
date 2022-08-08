@@ -190,16 +190,9 @@ def profileView(request):
         usr.first_name=first_name
         usr.last_name=last_name
         usr.save()
-        # prof=request.user.profile
-        # prof.contact=contact
-        # prof.save()
-        db=conn()
-        cursor=db.cursor()
-        query="update home_profile set contact='{}' where id={}".format(contact,usr.id)
-        cursor.execute(query)
-        db.commit()
-        db.close()
-
+        prof=request.user.profile
+        prof.contact=contact
+        prof.save()
         context['updated']="Details Successfully updated"
         return render(request,template_name,context=context)
     return render(request, template_name,context=context)
